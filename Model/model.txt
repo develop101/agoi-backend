@@ -1,0 +1,33 @@
+stock -{
+    curr price ,
+    prev price ,
+    naam,
+    desc,
+    icon,
+}
+user{
+    naam,
+    phone
+    email,
+    address,
+    adhaar,
+    pan card,
+    payments,
+
+}
+payments -{
+    id,
+    date,
+    status,
+    
+}
+order{
+    stock name,
+    order status,
+    user -user 
+}
+admin- {
+    master,
+    change price,
+    
+}

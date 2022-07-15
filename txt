@@ -1,0 +1,38 @@
+{
+    "error": false,
+    "message": "order was built",
+    "data": {
+        "cf_order_id": 2391377,
+        "order_id": "a047ec654b9316a531a3e50b7fb41d55",
+        "entity": "order",
+        "order_currency": "INR",
+        "order_amount": 10569.3,
+        "order_expiry_time": "2022-05-27T14:15:03+05:30",
+        "customer_details": {
+            "customer_id": "62676835f07b491186b6ad1d",
+            "customer_name": null,
+            "customer_email": "any@gmail.com",
+            "customer_phone": "+919149125098"
+        },
+        "order_meta": {
+            "return_url": "http://localhost:3000/get-return-order?order_id={order_id}&order_token={order_token}",
+            "notify_url": null,
+            "payment_methods": null
+        },
+        "settlements": {
+            "url": "https://sandbox.cashfree.com/pg/orders/a047ec654b9316a531a3e50b7fb41d55/settlements"
+        },
+        "payments": {
+            "url": "https://sandbox.cashfree.com/pg/orders/a047ec654b9316a531a3e50b7fb41d55/payments"
+        },
+        "refunds": {
+            "url": "https://sandbox.cashfree.com/pg/orders/a047ec654b9316a531a3e50b7fb41d55/refunds"
+        },
+        "order_status": "ACTIVE",
+        "order_token": "jfWIWPgbr1VrVGmo7mAH",
+        "order_note": "order info",
+        "payment_link": "https://payments-test.cashfree.com/order/#jfWIWPgbr1VrVGmo7mAH",
+        "order_tags": null,
+        "order_splits": []
+    }
+}
