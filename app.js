@@ -15,5 +15,8 @@ app.use("/api/v1/stock", stock);
 app.use("/api/v1/referral", refer);
 app.use("/api/v1/share", share);
 
+app.get('/', (req,res) => {
+    res.send('Welcome to the Agoi Server');
+});
 
 module.exports = app;
