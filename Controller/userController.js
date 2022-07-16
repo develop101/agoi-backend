@@ -191,3 +191,13 @@ exports.completeProfileDetails = async (req, res, next) => {
     });
   }
 };
+
+//DELETE
+exports.deleteUserById = async (req, res, next) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.status(200).json("User has been deleted...");
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
