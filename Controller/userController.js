@@ -53,6 +53,22 @@ exports.createUserByContact = async (req, res, next) => {
   }
 };
 
+//get all users
+exports.findall = async (req, res, next) => {
+  try {
+    let result = await User.find();
+    res.send({
+      message: "List of All User",
+      data: result,
+    });
+  } catch (err) {
+    console.log(err);
+    res.send({
+      message: err.message,
+    });
+  }
+};
+
 exports.findUserByContact = async (req, res, next) => {
   try {
     console.log(req.body);

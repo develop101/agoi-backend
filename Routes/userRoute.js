@@ -1,10 +1,11 @@
 const express = require("express");
 const { generateOrder, returnOrderUrl, getOrderFromBackend: getOrder, getOrderFromCashFree, generatePayment, getUserOrders } = require("../Controller/OrdersController");
-const { createUserByContact, findUserByContact, addKYCDetails, completeProfileDetails } = require("../Controller/userController");
+const { createUserByContact, findUserByContact, addKYCDetails, completeProfileDetails, findall } = require("../Controller/userController");
 const router = express.Router();
 
 
 router.route("/create").post(createUserByContact);
+router.get("/findall",findall);
 router.route("/finduser").post(findUserByContact)
 router.route("/addkyc").post(addKYCDetails)
 router.route("/complete-profile").post(completeProfileDetails)
