@@ -83,7 +83,7 @@ exports.getAllStocks = async (req, res, next) => {
 };
 
 //get all
-exports.getall = async (req, res, next) => {
+exports.findall = async (req, res, next) => {
   try {
     let result = await Share.find();
     res.send({
