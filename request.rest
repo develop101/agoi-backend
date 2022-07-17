@@ -1,12 +1,13 @@
  https://agoi-api.herokuapp.com/ 
 url = http://localhost:3002/
 ### Home 
+http://localhost:3002/api/v1/user/findAll/
 GET {url}
 
 ### SHARE   
 
 ### Create share
-POST http://localhost:3002/api/v1/share/create/
+POST https://agoi-api.herokuapp.com/api/v1/share/create/
 Content-Type: application/json
 
 {

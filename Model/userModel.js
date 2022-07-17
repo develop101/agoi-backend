@@ -113,6 +113,10 @@ const userSchema = new mongoose.Schema(
       unique: true,
       required: true,
     },
+    share: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Share",
+    }]
   },
   { timestamps: true }
 );

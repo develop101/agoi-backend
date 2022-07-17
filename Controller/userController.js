@@ -69,6 +69,22 @@ exports.findall = async (req, res, next) => {
   }
 };
 
+//get users byId
+exports.findById = async (req, res, next) => {
+  try {
+    let result = await User.findById(req.params.id).populate('share');  //cash out, notification
+    res.send({
+      message: "User succefully fetched",
+      data: result,
+    });
+  } catch (err) {
+    console.log(err);
+    res.send({
+      message: err.message,
+    });
+  }
+};
+
 exports.findUserByContact = async (req, res, next) => {
   try {
     console.log(req.body);

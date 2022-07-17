@@ -61,6 +61,11 @@ let shareSchema = new mongoose.Schema(
       enum: ["Available", "Sold Out"],
       default: "Available",
     },
+
+    share: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    }]
   },
   { timestamps: true }
 );
