@@ -117,7 +117,7 @@ exports.getAllStocks = async (req, res, next) => {
 //get all
 exports.findall = async (req, res, next) => {
   try {
-    let result = await Share.find();
+    let result = await Stock.find();
     res.send({
       message: "List of All share",
       data: result,
@@ -127,5 +127,15 @@ exports.findall = async (req, res, next) => {
     res.send({
       message: err.message,
     });
+  }
+};
+
+//DELETE
+exports.deleteById = async (req, res, next) => {
+  try {
+    await Stock.findByIdAndDelete(req.params.id);
+    res.status(200).json("stock has been deleted...");
+  } catch (err) {
+    res.status(500).json(err);
   }
 };

@@ -4,6 +4,7 @@ const {
   soldStock,
   findall,
   editStock,
+  deleteById,
 } = require("../Controller/stockController.js");
 const express = require("express");
 const { sellStocks } = require("../Controller/sellStocks.js");
@@ -15,4 +16,5 @@ router.get("/sold-out-stocks", soldStock);
 router.post("/sell-stock", sellStocks);
 router.get("/findall", findall)
 router.route("/edit/:id").post(editStock)
+router.delete("/:id", deleteById)
 module.exports = router;
