@@ -207,3 +207,20 @@ exports.getUserOrders = async (req, res) => {
     res.send({ error: true, message: "eror occurred" });
   }
 };
+
+
+//get all order
+exports.findall = async (req, res, next) => {
+  try {
+    let result = await Order.find();
+    res.send({
+      message: "List of All Order",
+      data: result,
+    });
+  } catch (err) {
+    console.log(err);
+    res.send({
+      message: err.message,
+    });
+  }
+};
