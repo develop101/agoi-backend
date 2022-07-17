@@ -18,6 +18,38 @@ exports.createStock = async (req, res, next) => {
   }
 };
 
+exports.editStock = async (req, res, next) => {
+  try {
+    let data = req.body;
+    const stockData = await Stock.findById(req.params.id);
+    
+    if (!stockData) {
+      return res.send({ error: true, message: "Stock not found" });
+    }
+
+    stockData.stock_name = data.stock_name ? data.stock_name : stockData.stock_name;
+    stockData.stock_location = data.stock_location ? data.stock_location : stockData.stock_location;
+    stockData.stock_status = data.stock_status ? data.stock_status : stockData.stock_status;
+    stockData.face_value = data.face_value ? data.face_value : stockData.face_value;
+    stockData.price_per_lot = data.price_per_lot ? data.price_per_lot : stockData.price_per_lot;
+    stockData.stock_previous_price = data.stock_previous_price ? data.stock_previous_price : stockData.stock_previous_price;
+    stockData.stamp_duty = data.stamp_duty ? data.stamp_duty : stockData.stamp_duty;
+    stockData.transaction_fee = data.transaction_fee ? data.transaction_fee : stockData.transaction_fee;
+    stockData.available_on = data.available_on ? data.available_on : stockData.available_on;
+    stockData.share_per_lot = data.share_per_lot ? data.share_per_lot : stockData.share_per_lot;
+
+    await stockData.save();
+    res.send({
+      message: "Stock updated",
+      data: stockData,
+    })
+  }catch(err){
+    res.send({
+      message: err.message,
+    })
+  }
+}
+
 //get available stock
 exports.availableStock = async (req, res, next) => {
   try {
