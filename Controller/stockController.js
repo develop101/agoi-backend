@@ -81,3 +81,19 @@ exports.getAllStocks = async (req, res, next) => {
     });
   }
 };
+
+//get all
+exports.getall = async (req, res, next) => {
+  try {
+    let result = await Share.find();
+    res.send({
+      message: "List of All share",
+      data: result,
+    });
+  } catch (err) {
+    console.log(err);
+    res.send({
+      message: err.message,
+    });
+  }
+};
