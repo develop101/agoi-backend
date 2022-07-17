@@ -4,16 +4,36 @@ url = http://localhost:3002/
 http://localhost:3002/api/v1/user/findAll/
 GET {url}
 
-### SHARE   
+### STOCK
 
-### Create share
-POST https://agoi-api.herokuapp.com/api/v1/share/create/
+### Create
+POST http://localhost:3002/api/v1/stock/create/
 Content-Type: application/json
 
 {
-"share_id": "5",
+"stock_sp_id": "3",
+"stock_name": "HDFC Bank Ltd"
+}
+
+### Find All
+GET  http://localhost:3002/api/v1/stock/available-stocks/
+Content-Type: application/json
+
+### sold-out-stocks
+GET  http://localhost:3002/api/v1/stock/sold-out-stocks/
+Content-Type: application/json
+
+## sell-stock
+
+### SHARE   
+
+### Create share
+POST http://localhost:3002/api/v1/share/create/
+Content-Type: application/json
+
+{
+"share_id": "11",
 "share_name": "test stock Name",
-"share_icon": "file", //use postman as form datatype 
 "cloudnery_id": "stirng",
 "share_companyType": "company Type",
 "face_value": "0",
@@ -41,3 +61,13 @@ Content-Type: application/json
 
 ### Find all User
 GET  http://localhost:3002/api/v1/user/findAll/
+
+###
+
+POST http://localhost:3002/api/v1/stock/create/
+Content-Type: application/json
+
+{
+"stock_sp_id": "2",
+"stock_name": "HDFC Bank Ltd"
+}
