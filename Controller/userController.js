@@ -72,7 +72,7 @@ exports.findall = async (req, res, next) => {
 //get users byId
 exports.findById = async (req, res, next) => {
   try {
-    let result = await User.findById(req.params.id).populate('share');  //cash out, notification
+    let result = await User.findById(req.params.id).populate('stock');  //cash out, notification
     res.send({
       message: "User succefully fetched",
       data: result,
@@ -84,6 +84,29 @@ exports.findById = async (req, res, next) => {
     });
   }
 };
+
+//Edit Wallet Amount 
+exports.EditWalletAmount = async (req, res, next) => {
+  try {
+    let data = req.data;
+
+    const userData = await User.findOne({
+      mobile_number: data.mobile_number,
+    })
+
+    userData.WalletAmount = data.WalletAmount ? data.WalletAmount : userData.WalletAmount;
+    await userData.save();
+
+    res.send({
+      message: "Wallet Amount Updated",
+      data: userData,
+    })
+  } catch (err) {
+    res.send({
+      message: err.message,
+    })
+  }
+}
 
 exports.findUserByContact = async (req, res, next) => {
   try {
