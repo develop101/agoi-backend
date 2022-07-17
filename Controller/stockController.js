@@ -130,6 +130,23 @@ exports.findall = async (req, res, next) => {
   }
 };
 
+//findById
+exports.findById = async (req, res, next) => {
+  try {
+    
+    let result = await Share.findById(req.params.id);
+    res.send({
+      message: "Stock found",
+      data: result,
+    });
+  } catch (err) {
+    console.log(err);
+    res.send({
+      message: err.message,
+    });
+  }
+};
+
 //DELETE
 exports.deleteById = async (req, res, next) => {
   try {
