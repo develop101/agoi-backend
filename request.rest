@@ -84,3 +84,5 @@ GET http://localhost:3002/api/v1/user/getallKYC
 
 ### get by ID
 GET http://localhost:3002/api/v1/user/getKYC/62d44229a4e2089d14020c4e
+
+### => Get All Purchase Order
