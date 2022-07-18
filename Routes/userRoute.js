@@ -18,8 +18,8 @@ router.get("/get-user-orders/:id", getUserOrders)
 router.delete("/:id", deleteUserById);
 router.get("/:id",findById);
 router.route("edit-walate-amount/:id").post(EditWalletAmount);
-router.get("/getallKYC", getallKYCDetails)
-router.get("/getKYC/:id", getKYCDetails)
+router.get("/getallKYC", getallKYCDetails);
+router.get("/getKYC/:id", getKYCDetails);
 
 
 module.exports = router;
