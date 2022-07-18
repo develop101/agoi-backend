@@ -237,6 +237,7 @@ exports.getKYCDetails = async (req, res, next) => {
     nominee_name: kycData.nominee_name,
     is_completed_profile: kycData.is_completed_profile,
     is_completed_kyc: kycData.is_completed_kyc,
+    is_approved_kyc: kycData.is_approved_kyc,
    }
 
    return res.send({
