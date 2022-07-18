@@ -189,6 +189,49 @@ exports.addKYCDetails = async (req, res, next) => {
   }
 };
 
+exports.getallKYCDetails = async (req, res, next) => {
+  try {
+    const kycData = await User.find();
+
+   console.log(kycData);
+
+  }catch (err) {
+    res.send({
+      message: err.message,
+    })
+  }
+}
+
+exports.getKYCDetails = async (req, res, next) => {
+  try {
+    console.log(req.params.id);
+    const kycData = await User.findById(req.params.id);
+
+   const kycObj = {
+    mobile_number: kycData.mobile_number,
+    email_id: kycData.email_id,
+    demat_acc_no: kycData.demat_acc_no,
+    pan_card_number: kycData.pan_card_number,
+    pan_card_link: kycData.pan_card_link,
+    account_number: kycData.account_number,
+    account_number_link: kycData.account_number_link,
+    aadhar_number: kycData.aadhar_number,
+    demat_screenshot: kycData.demat_screenshot,
+    nominee_name: kycData.nominee_name,
+    is_completed_profile: kycData.is_completed_profile,
+    is_completed_kyc: kycData.is_completed_kyc,
+   }
+
+   return res.send({
+    data: kycObj
+  });
+  }catch (err) {
+    res.send({
+      message: err.message,
+    })
+  }
+}
+
 exports.completeProfileDetails = async (req, res, next) => {
   try {
     console.log(req.body);
