@@ -3,7 +3,7 @@ let mongoose = require("mongoose");
 const loginSchema = new mongoose.Schema(
   {
     mobile_number: {
-      type: mongoose.Schema.Types.String,
+      type: mongoose.Schema.Types.Number,
       required: true,
       trim: true,
       unique: true,

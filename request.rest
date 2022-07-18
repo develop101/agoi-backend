@@ -86,3 +86,12 @@ GET http://localhost:3002/api/v1/user/getallKYC
 GET http://localhost:3002/api/v1/user/getKYC/62d44229a4e2089d14020c4e
 
 ### => Get All Purchase Order
+
+### => login
+POST  http://localhost:3002/api/v1/auth/login
+Content-Type: application/json
+
+{
+"mobile_number": 123456789,
+"password": "password"
+}
