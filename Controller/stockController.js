@@ -38,7 +38,7 @@ exports.editStock = async (req, res, next) => {
     stockData.available_on = data.available_on ? data.available_on : stockData.available_on;
     stockData.share_per_lot = data.share_per_lot ? data.share_per_lot : stockData.share_per_lot;
 
-    await stockData.save();
+    await stockData.update();
     res.send({
       message: "Stock updated",
       data: stockData,
@@ -133,8 +133,7 @@ exports.findall = async (req, res, next) => {
 //findById
 exports.findById = async (req, res, next) => {
   try {
-    
-    let result = await Share.findById(req.params.id);
+    let result = await Stock.findById(req.params.id);
     res.send({
       message: "Stock found",
       data: result,
