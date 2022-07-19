@@ -14,7 +14,7 @@ const login = require("./Routes/loginRoute");
 app.use("/api/v1/user", user);
 app.use("/api/v1/stock", stock);
 app.use("/api/v1/referral", refer);
-app.use("/api/v1/share", share);
+//app.use("/api/v1/share", share);
 app.use("/api/v1/auth", login);
 
 app.get('/', (req,res) => {

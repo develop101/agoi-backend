@@ -12,6 +12,9 @@ let stockSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.String,
       trim: true,
     },
+    cloudinary_id: {
+      type: mongoose.Schema.Types.String,
+    },
     stock_name: {
       type: mongoose.Schema.Types.String,
       trim: true,
@@ -57,6 +60,14 @@ let stockSchema = new mongoose.Schema(
     share_per_lot: {
       type: mongoose.Schema.Types.Number,
       default: 1,
+    },
+    companyType: {
+      type: mongoose.Schema.Types.String,
+      trim: true,
+    },
+    discription: {
+      type: mongoose.Schema.Types.String,
+      trim: true,
     },
   },
   { timestamps: true }
