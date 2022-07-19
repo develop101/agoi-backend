@@ -97,9 +97,8 @@ const userSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.Boolean,
       default: false,
     },
-    is_approved_kyc: {
-      type: mongoose.Schema.Types.Boolean,
-      default: false,
+    reject_reasion: {
+      type: mongoose.Schema.Types.String,
     },
     isReferred: {
       type: mongoose.Schema.Types.Boolean,

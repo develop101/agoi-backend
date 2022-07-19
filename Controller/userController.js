@@ -88,13 +88,15 @@ exports.findById = async (req, res, next) => {
 //Edit Wallet Amount 
 exports.EditWalletAmount = async (req, res, next) => {
   try {
-    let data = req.data;
+    let data = req.body;
+
+    console.log(data);
 
     const userData = await User.findOne({
       mobile_number: data.mobile_number,
     })
 
-    userData.WalletAmount = data.WalletAmount ? data.WalletAmount : userData.WalletAmount;
+    userData.wallet_balance = data.wallet_balance ? data.wallet_balance : userData.wallet_balance;
     await userData.save();
 
     res.send({
@@ -237,7 +239,7 @@ exports.getKYCDetails = async (req, res, next) => {
     nominee_name: kycData.nominee_name,
     is_completed_profile: kycData.is_completed_profile,
     is_completed_kyc: kycData.is_completed_kyc,
-    is_approved_kyc: kycData.is_approved_kyc,
+    is_approved: kycData.is_approved,
    }
 
    return res.send({
@@ -301,3 +303,28 @@ exports.deleteUserById = async (req, res, next) => {
     res.status(500).json(err);
   }
 };
+
+exports.editUserById = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const data = req.body;
+    const userData = await User.findById(id);
+    
+    if(!userDate) {
+      return res.send({ message: "user not found"});
+    }
+
+    userData.name = data.name ? data.name : userData.name;
+    userData.email_id = data.email_id ? data.email_id : userData.email_id;
+    userData.mobile_number = data.mobile_number ? data.mobile_number : userData.mobile_number;
+
+    //name, email, mobile & password
+
+    await userData.save();
+  } catch (err) {
+    res.send({
+      message: message.err,
+    })
+  }
+
+}

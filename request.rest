@@ -64,6 +64,15 @@ GET  http://localhost:3002/api/v1/user/findAll/
 
 ###
 
+### Edit wallet amount 
+POST http://localhost:3002/api/v1/user/edit-walate-amount/62d44229a4e2089d14020c4e
+Content-Type: application/json
+
+{
+"mobile_number": "1234567891",
+"wallet_balance": 60
+}
+
 POST http://localhost:3002/api/v1/stock/create/
 Content-Type: application/json
 
@@ -94,4 +103,14 @@ Content-Type: application/json
 {
 "mobile_number": 123456781,
 "password": "password"
+}
+
+### edit user admin details
+PUT http://localhost:3002/api/v1/user/editadmin/:id
+Content-Type: application/json
+
+{
+    "name": "user Name",
+    "email_id": "user@user.com",
+    "mobile_number": 123454321
 }
