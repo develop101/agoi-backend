@@ -143,3 +143,15 @@ Content-Type: application/json
 ### edit user admin details
 GET  http://localhost:3002/api/v1/order
 Content-Type: application/json
+
+###Order
+
+POST http://localhost:3002/api/v1/user/createOrder
+Content-Type: application/json
+
+{
+    "amount": "12",
+    "csid": "62d83d8cf9e2a2fa687843f2",
+    "csmail": "user@user.com",
+    "csphone": "9090407368"
+}
