@@ -3,7 +3,7 @@ const router = express.Router();
 const { getOrderFromBackend, getAll } = require("../Controller/OrdersController.js");
 
 
-router.get("/", getAll);
+router.get("/all", getAll);
 router.get(":id", getOrderFromBackend);
 
 

@@ -146,6 +146,7 @@ Content-Type: application/json
 
 ###Order
 
+### create
 POST http://localhost:3002/api/v1/user/createOrder
 Content-Type: application/json
 
@@ -155,3 +156,7 @@ Content-Type: application/json
     "csmail": "user@user.com",
     "csphone": "9090407368"
 }
+
+### Get All
+GET  http://localhost:3002/api/v1/user/order
+Content-Type: application/json

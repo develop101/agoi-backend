@@ -1,6 +1,7 @@
 const Referral = require("../Model/referralModel");
 const User = require("../Model/userModel");
 const crypto = require("crypto");
+const Order = require("../Model/orderModel");
 exports.createUserByContact = async (req, res, next) => {
   try {
     console.log(req.body);
@@ -60,6 +61,21 @@ exports.getAll = async (req, res, next) => {
     let result = await User.find();
     res.send({
       message: "List of All User",
+      data: result,
+    });
+  } catch (err) {
+    console.log(err);
+    res.send({
+      message: err.message,
+    });
+  }
+};
+//get all users
+exports.getAllOrder = async (req, res, next) => {
+  try {
+    let result = await Order.find();
+    res.send({
+      message: "List of All Order",
       data: result,
     });
   } catch (err) {
