@@ -1,4 +1,5 @@
 let mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const userSchema = new mongoose.Schema(
   {
@@ -127,6 +128,38 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+
+const NotificationSchema = new Schema({
+  title: { type: String, required: true },
+  context: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now(), required: true }
+});
+
+
+// const UserSchema = new Schema({
+//   username: { type: String, required: true }
+// });
+
+const UserNotificationSchema = new Schema({
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  },
+  notification: {
+    type: Schema.Types.ObjectId,
+    ref: "Notification"
+  },
+  readAt: { type: Date, required: true, default: Date.now() }
+});
+
+// module.exports = {
+//   Notification: mongoose.model("Notification", NotificationSchema),
+//   User: mongoose.model("User", userSchema),
+//   UserNotification: mongoose.model("UserNotification", UserNotificationSchema)
+// };
+
+
 
 const User = mongoose.model("User", userSchema);
 

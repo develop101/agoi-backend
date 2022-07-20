@@ -60,7 +60,7 @@ DELETE   http://localhost:3002/api/v1/share/62c0fd2523eac2c9d19ab913
 Content-Type: application/json
 
 ### Find all User
-GET  http://localhost:3002/api/v1/user/findAll/
+GET  http://localhost:3002/api/v1/user
 
 ###
 
