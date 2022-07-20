@@ -11,6 +11,7 @@ exports.createUserByContact = async (req, res, next) => {
       });
     }
     let isExist = await User.findOne({ mobile_number: data.mobile_number });
+    console.log(isExist);
     if (isExist) {
       return res.send({
         message: "user already exists",
@@ -212,7 +213,7 @@ exports.getallKYCDetails = async (req, res, next) => {
    }
 
    return res.send({
-    data: kycObj
+    data: kycData
   });
   }catch (err) {
     res.send({
@@ -304,7 +305,7 @@ exports.deleteUserById = async (req, res, next) => {
   }
 };
 
-exports.editUserById = async (req, res, next) => {
+exports.editUserById1 = async (req, res, next) => {
   try {
     const id = req.params.id;
     const data = req.body;
@@ -321,6 +322,9 @@ exports.editUserById = async (req, res, next) => {
     //name, email, mobile & password
 
     await userData.save();
+    res.send({
+      message: userData
+    })
   } catch (err) {
     res.send({
       message: message.err,
@@ -328,3 +332,78 @@ exports.editUserById = async (req, res, next) => {
   }
 
 }
+
+//Edit admin details 
+exports.editUserById = async (req, res, next) => {
+  try {
+    let data = req.body;
+    console.log("edit User", data)
+    const userData = await User.findOne({
+      mobile_number: data.mobile_number,
+    });
+    
+    if(!userDate) {
+      return res.send({ error: true, message: "user not found"});
+    }
+
+    userData.name = data.name ? data.name : userData.name;
+    userData.email_id = data.email_id ? data.email_id : userData.email_id;
+   // userData.mobile_number = data.mobile_number ? data.mobile_number : userData.mobile_number;
+
+    //name, email, mobile & password
+
+    await userData.save();
+    res.send({
+      message: userData
+    })
+  } catch (err) {
+    res.send({
+      message: message.err,
+    })
+  }
+
+}
+
+exports.editAdminDetails = async (req, res, next) => {
+  try {
+    console.log(req.body);
+    let data = req.body;
+
+    const result = await User.findOne({
+      mobile_number: data.mobile_number,
+    });
+    console.log(result);
+
+    if (!result) {
+      return res.send({ error: true, message: "user not found" });
+    }
+    // if (result.email_id) {
+    //   result.email_id = data.email_id ? data.email_id : result.email_id;
+    // } else {
+    //   result.email_id.value = data.email_id;
+    //   console.log('input does not exist');
+    // }
+    result.email_id = data.email_id ? data.email_id : result.email_id;
+    result.name = data.name ? data.name : result.name;
+    result.mobile_number = data.mobile_number ? data.mobile_number : result.mobile_number;
+   // userData.mobile_number = data.mobile_number ? data.mobile_number : userData.mobile_number;
+
+    // result.demat_acc_no = data.demat_acc_no
+    //   ? data.demat_acc_no
+    //   : result.demat_acc_no;
+    // result.pan_card_number = data.pan_card_number
+    //   ? data.pan_card_number
+    //   : result.pan_card_link;
+ 
+    await result.save();
+    res.send({
+      message: "user found",
+      data: result,
+    });
+  } catch (err) {
+    console.log(err);
+    res.send({
+      message: err.message,
+    });
+  }
+};

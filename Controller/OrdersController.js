@@ -210,11 +210,28 @@ exports.getUserOrders = async (req, res) => {
 
 
 //get all order
-exports.findall = async (req, res, next) => {
+exports.getAll = async (req, res, next) => {
   try {
+    console.log('get All')
     let result = await Order.find();
     res.send({
       message: "List of All Order",
+      data: result,
+    });
+  } catch (err) {
+    console.log(err);
+    res.send({
+      message: err.message,
+    });
+  }
+};
+
+exports.availableOrder = async (req, res, next) => {
+  try {
+    console.log("available order")
+    let result = await Order.find({ order_status: "Available" });
+    res.send({
+      message: "stock created successfully",
       data: result,
     });
   } catch (err) {

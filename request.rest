@@ -51,6 +51,12 @@ Content-Type: application/json
 GET  http://localhost:3002/api/v1/share/findAll/
 Content-Type: application/json
 
+
+### Find All Stock
+GET  http://localhost:3002/api/v1/stock/findAll/
+Content-Type: application/json
+
+
 ### Find Share By Id
 GET  http://localhost:3002/api/v1/share/62c0fd1f23eac2c9d19ab911
 Content-Type: application/json
@@ -88,6 +94,25 @@ GET  http://localhost:3002/api/v1/user/findAll/
 
 ### KYC
 
+### addKYC
+POST  http://localhost:3002/api/v1/user/addKYC
+Content-Type: application/json
+
+{
+"mobile_number": "1234567891",
+"email_id": "ueser@user.com",
+"demat_acc_no": "1234567890",
+"pan_card_number": "KJID1233",
+"pan_card_link": "string",
+"account_number": "1234567890",
+"account_number_link": "sting",
+"aadhar_number": "1234567890",
+"demat_screenshot": "string",
+"nominee_name": "nameOfNominee",
+"is_completed_profile": true,
+"is_completed_kyc": true
+}
+
 ### get all
 GET http://localhost:3002/api/v1/user/getallKYC
 
@@ -106,11 +131,15 @@ Content-Type: application/json
 }
 
 ### edit user admin details
-PUT http://localhost:3002/api/v1/user/editadmin/:id
+POST  http://localhost:3002/api/v1/user/editadmin
 Content-Type: application/json
 
 {
-    "name": "user Name",
+    "name": "user",
     "email_id": "user@user.com",
-    "mobile_number": 123454321
+    "mobile_number": "1234"
 }
+
+### edit user admin details
+GET  http://localhost:3002/api/v1/order
+Content-Type: application/json
