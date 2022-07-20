@@ -117,7 +117,9 @@ exports.getAllStocks = async (req, res, next) => {
 //get all
 exports.findall = async (req, res, next) => {
   try {
-    let result = await Stock.find();
+    let result = await Stock.find()
+    .sort({ updatedAt: -1 });                  // sort in descending order
+   // .then(records => res.json(records))     // format response as json
     res.send({
       message: "List of All share",
       data: result,
