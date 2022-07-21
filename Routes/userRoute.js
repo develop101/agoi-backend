@@ -1,6 +1,6 @@
 const express = require("express");
 const { generateOrder, returnOrderUrl, getOrderFromBackend: getOrder, getOrderFromCashFree, generatePayment, getUserOrders } = require("../Controller/OrdersController");
-const { createUserByContact, findUserByContact, addKYCDetails, completeProfileDetails, findall, findById, deleteUserById , EditWalletAmount, getKYCDetails, getallKYCDetails, editUserById, getAll, editAdminDetails, getAllOrder} = require("../Controller/userController");
+const { createUserByContact, findUserByContact, addKYCDetails, completeProfileDetails, findall, findById, deleteUserById , EditWalletAmount, getKYCDetails, getallKYCDetails, editUserById, getAll, editAdminDetails, getAllOrder, getOrderById} = require("../Controller/userController");
 const router = express.Router();
 
 
@@ -12,6 +12,7 @@ router.route("/complete-profile").post(completeProfileDetails)
 router.route("/createOrder").post(generateOrder)
 router.route("/get-return-order").post(returnOrderUrl)
 router.get("/order", getAllOrder);
+router.get("/order/:order_id", getOrderById);
 router.get("/get-order/:order_id/:order_token", getOrder)
 router.get("/get-order-cashfree/:order_id", getOrderFromCashFree)
 router.post("/generate-payment", generatePayment)

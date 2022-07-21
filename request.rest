@@ -160,3 +160,6 @@ Content-Type: application/json
 ### Get All
 GET  http://localhost:3002/api/v1/user/order
 Content-Type: application/json
+
+### GET ORDER By order_id
+GET http://localhost:3002/api/v1/user/order/ee306c630f51bc6da56301bb2a5fea5f HTTP/1.1

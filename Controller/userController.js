@@ -86,6 +86,22 @@ exports.getAllOrder = async (req, res, next) => {
   }
 };
 
+//get order by order_Id
+exports.getOrderById = async (req, res, next) => {
+  try {
+    let result = await Order.findOne({ order_id: req.params.order_id});
+    res.send({
+      message: "List of All Order",
+      data: result,
+    });
+  } catch (err) {
+    console.log(err);
+    res.send({
+      message: err.message,
+    });
+  }
+};
+
 //get users byId
 exports.findById = async (req, res, next) => {
   try {
