@@ -43,6 +43,13 @@ const orderSchema = new mongoose.Schema(
     no_of_lots: {
       type: mongoose.Schema.Types.Number,
     },
+    is_order_approved: {
+      type: mongoose.Schema.Types.Boolean,
+      default: false,
+    },
+    order_feedback: {
+      type: mongoose.Schema.Types.String,
+    },
     order_type: {
       //type:  enum {sell , purchaes }
     } // order when order is create is will get define   "cf_order_id": 2685132, 

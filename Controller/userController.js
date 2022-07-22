@@ -89,7 +89,7 @@ exports.getAllOrder = async (req, res, next) => {
 //get order by order_Id
 exports.getOrderById = async (req, res, next) => {
   try {
-    let result = await Order.findOne({ order_id: req.params.order_id});
+    let result = await Order.findById(req.params.id);
     res.send({
       message: "List of All Order",
       data: result,
@@ -101,6 +101,34 @@ exports.getOrderById = async (req, res, next) => {
     });
   }
 };
+
+// change order status
+exports.orderStatus = async (req, res, next) => {
+  try {
+    let id = req.params.id;
+    let data = req.body;
+    console.log("req body" , data);
+
+    const orderData = await Order.findById(id);
+    if (!orderData) {
+      return res.send({ error: true, message: "order not found" });
+    }
+    
+    orderData.is_order_approved = data.is_order_approved ? data.is_order_approved : orderData.is_order_approved;
+    orderData.order_feedback = data.order_feedback ? data.order_feedback : orderData.order_feedback;
+    
+    await orderData.save()
+    
+    return res.send({
+      message: "order status updated successfully",
+      data: orderData
+  });
+  }catch (err) {
+    res.send({
+      message: err.message,
+    })
+  }
+}
 
 //get users byId
 exports.findById = async (req, res, next) => {

@@ -37,6 +37,7 @@ DELETE https://agoi-api.herokuapp.com/api/v1/stock/62d42cbc496b9458427a7ef3
 
 ### get by ID
 
+GET https://agoi-api.herokuapp.com/api/v1/stock/62d6f94e3192ca715c317031 HTTP/1.1
 
 ########## USER 
 
@@ -79,6 +80,7 @@ Content-Type: application/json
 ########## ORDER 
 
 ### get all
+GET https://agoi-api.herokuapp.com/api/v1/user/order
 
 ### get all sell order
 
