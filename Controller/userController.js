@@ -261,6 +261,7 @@ exports.kyc = async (req, res, next) => {
     const kycData = await User.find();
   kycData.forEach(async (kyc) => {
    kyc = {
+    _id: kyc.id,
     mobile_number: kyc.mobile_number,
     email_id: kyc.email_id,
     demat_acc_no: kyc.demat_acc_no,
