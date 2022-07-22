@@ -51,7 +51,7 @@ DELETE http://localhost:3002/api/v1/user/:id
 GET https://agoi-api.herokuapp.com/api/v1/user/62d83d8cf9e2a2fa687843f2 HTTP/1.1
 
 ### edit wallet balance by ID 
-POST https://agoi-api.herokuapp.com/api/v1/user/edit-walate-amount/62d44229a4e2089d14020c4e
+POST https://agoi-api.herokuapp.com/api/v1/user/edit-wallet/62d83d8cf9e2a2fa687843f2
 Content-Type: application/json
 
 {
@@ -100,8 +100,24 @@ Content-Type: application/json
 ########## NOTIFY USER 
 
 ###  Send notification to user (multipul)
+POST http://localhost:3002/api/v1/user/notify HTTP/1.1
+Content-Type: application/json
+{
+    "userID": [
+          {
+            "id": "62da47fca3afc3ec3790de0d"
+          },
+           {
+            "id": "62d8461c853c5d50e8222981"
+          }
+        ],
+    "message": "Hello World"
+}
+
 
 ### get notification history 
+
+GET http://localhost:3002/api/v1/user/notify/all HTTP/1.1
 
 ########## CASH OUT  ( after selling the order  generate a cash out )
 
@@ -129,6 +145,66 @@ Content-Type: application/json
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##################################################################################################################################################
 
 
 

@@ -2,6 +2,7 @@ const Referral = require("../Model/referralModel");
 const User = require("../Model/userModel");
 const crypto = require("crypto");
 const Order = require("../Model/orderModel");
+const Notification = require("../Model/notificationModel");
 exports.createUserByContact = async (req, res, next) => {
   try {
     console.log(req.body);
@@ -491,6 +492,78 @@ exports.editAdminDetails = async (req, res, next) => {
     await result.save();
     res.send({
       message: "user found",
+      data: result,
+    });
+  } catch (err) {
+    console.log(err);
+    res.send({
+      message: err.message,
+    });
+  }
+};
+
+exports.storeNotification = async (req, res, next) => {
+  try{
+    let data = req.body;
+    // console.log("sotreNotification", data)
+
+    // console.log("user id ", data.userID.id);
+
+    // console.log("message ", data.message);
+
+    for(let i = 0, l = data.userID.length; i < l; i++) {
+   
+       var obj = data.userID[i];
+       var id = obj.id   // user id 
+       var message = data.message; // message
+      
+      console.log(id, message)
+
+      notifyObj = new Notification ({
+        id: obj.id,
+        message: message
+      }); 
+
+      await notifyObj.save()
+      console.log(notifyObj);
+
+
+    
+
+       //var userData = await User.findById(id);
+      
+
+      // Since each element is an object (in our example),
+      // we can now access the objects properties with `obj.id` and `obj.name`. 
+      // We could also use `data.items[i].id`.
+
+  }
+
+  // data.forEach(element => {
+  //   Userobj = {
+  //     id: element.userID,
+  //   }
+  //   console.log(Userobj);
+  // });
+
+    return res.send({
+      data: data
+    })
+
+  }catch (err) {
+    console.log(err);
+    res.send({
+      message: err.message,
+    });
+  }
+}
+
+//get all users
+exports.getAllNotification = async (req, res, next) => {
+  try {
+    let result = await Notification.find();
+    res.send({
+      message: "List of All Notification",
       data: result,
     });
   } catch (err) {
