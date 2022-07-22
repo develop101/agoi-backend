@@ -86,6 +86,13 @@ const userSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.Boolean,
       default: false,
     },
+    is_kyc_approved: {
+      type: mongoose.Schema.Types.Boolean,
+      default: false,
+    },
+    kyc_feedback: {
+      type: mongoose.Schema.Types.String,
+    },
     is_completed_profile: {
       type: mongoose.Schema.Types.Boolean,
       default: false,

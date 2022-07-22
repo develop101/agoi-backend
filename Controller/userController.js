@@ -290,6 +290,34 @@ exports.getKYCDetails = async (req, res, next) => {
   }
 }
 
+
+exports.kycStatus = async (req, res, next) => {
+  try {
+    let id = req.params.id;
+    let data = req.body;
+    console.log("req body" , data);
+
+    const kycData = await User.findById(id);
+    if (!kycData) {
+      return res.send({ error: true, message: "user not found" });
+    }
+
+    kycData.is_kyc_approved = data.is_kyc_approved ? data.is_kyc_approved : kycData.is_kyc_approved;
+    kycData.kyc_feedback = data.kyc_feedback ? data.kyc_feedback : kycData.kyc_feedback;
+  
+    await kycData.save()
+    
+   return res.send({
+    message: "kyc status updated",
+    data: kycData
+  });
+  }catch (err) {
+    res.send({
+      message: err.message,
+    })
+  }
+}
+
 exports.completeProfileDetails = async (req, res, next) => {
   try {
     console.log(req.body);
