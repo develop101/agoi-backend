@@ -87,9 +87,15 @@ GET https://agoi-api.herokuapp.com/api/v1/user/order
 ### get all  purchase order
 
 ### get order by ID 
-GET http://localhost:3002/api/v1/user/order/ee306c630f51bc6da56301bb2a5fea5f HTTP/1.1
+GET http://localhost:3002/api/v1/user/order/62d847c0b8c0d49c3b6f9bd4 HTTP/1.1
 
 ### change order status with reason 
+POST https://agoi-api.herokuapp.com/api/v1/user/order/62d847c0b8c0d49c3b6f9bd4 
+Content-Type: application/json
+{
+    "is_order_approved": true,
+    "order_feedback": "Aman's order PC"
+}
 
 ########## NOTIFY USER 
 
