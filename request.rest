@@ -68,7 +68,13 @@ GET http://localhost:3002/api/v1/user/kyc/62d83d8cf9e2a2fa687843f2
 
 
 ### change kyc statu  with reason 
+POST https://agoi-api.herokuapp.com/api/v1/user/kyc/62da47fca3afc3ec3790de0d
+Content-Type: application/json
 
+{
+    "is_kyc_approved": false,
+    "kyc_feedback": "feedback (reasion of rejection)"
+}
 
 ########## ORDER 
 
