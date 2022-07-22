@@ -226,28 +226,31 @@ exports.addKYCDetails = async (req, res, next) => {
 };
 
 //GET ALL KYC DETAILS
-exports.getallKYCDetails = async (req, res, next) => {
+exports.kyc = async (req, res, next) => {
   try {
+    let allkyc = [];
     const kycData = await User.find();
-
-   const kycObj = {
-    mobile_number: kycData.mobile_number,
-    email_id: kycData.email_id,
-    demat_acc_no: kycData.demat_acc_no,
-    pan_card_number: kycData.pan_card_number,
-    pan_card_link: kycData.pan_card_link,
-    account_number: kycData.account_number,
-    account_number_link: kycData.account_number_link,
-    aadhar_number: kycData.aadhar_number,
-    demat_screenshot: kycData.demat_screenshot,
-    nominee_name: kycData.nominee_name,
-    is_completed_profile: kycData.is_completed_profile,
-    is_completed_kyc: kycData.is_completed_kyc,
+  kycData.forEach(async (kyc) => {
+   kyc = {
+    mobile_number: kyc.mobile_number,
+    email_id: kyc.email_id,
+    demat_acc_no: kyc.demat_acc_no,
+    pan_card_number: kyc.pan_card_number,
+    pan_card_link: kyc.pan_card_link,
+    account_number: kyc.account_number,
+    account_number_link: kyc.account_number_link,
+    aadhar_number: kyc.aadhar_number,
+    demat_screenshot: kyc.demat_screenshot,
+    nominee_name: kyc.nominee_name,
+    is_completed_profile: kyc.is_completed_profile,
+    is_completed_kyc: kyc.is_completed_kyc,
    }
+  allkyc.push(kyc);
+})
+return res.send({
+  data: allkyc
+});
 
-   return res.send({
-    data: kycData
-  });
   }catch (err) {
     res.send({
       message: err.message,
