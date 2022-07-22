@@ -70,7 +70,7 @@ exports.getAll = async (req, res, next) => {
     });
   }
 };
-//get all users
+//get all Order
 exports.getAllOrder = async (req, res, next) => {
   try {
     let result = await Order.find();
@@ -122,20 +122,21 @@ exports.findById = async (req, res, next) => {
 exports.EditWalletAmount = async (req, res, next) => {
   try {
     let data = req.body;
+    let id = req.params.id;
 
-    console.log(data);
+    const result = await User.findById(id);
 
-    const userData = await User.findOne({
-      mobile_number: data.mobile_number,
-    })
+    if (!result) {
+      return res.send({ error: true, message: "user not found" });
+    }
 
-    userData.wallet_balance = data.wallet_balance ? data.wallet_balance : userData.wallet_balance;
-    await userData.save();
+    result.wallet_balance = data.wallet_balance ? data.wallet_balance : result.wallet_balance;
 
+    await result.save();
     res.send({
-      message: "Wallet Amount Updated",
-      data: userData,
-    })
+      message: "walllet balance",
+      data: result,
+    });
   } catch (err) {
     res.send({
       message: err.message,

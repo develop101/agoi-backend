@@ -43,6 +43,9 @@ const orderSchema = new mongoose.Schema(
     no_of_lots: {
       type: mongoose.Schema.Types.Number,
     },
+    order_type: {
+      //type:  enum {sell , purchaes }
+    } // order when order is create is will get define   "cf_order_id": 2685132, 
   },
   { timestamps: true }
 );

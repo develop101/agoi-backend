@@ -1,55 +1,21 @@
- https://agoi-api.herokuapp.com/ 
-url = http://localhost:3002/
-### Home 
-http://localhost:3002/api/v1/user/findAll/
-GET {url}
-
-### STOCK
-
-### Create
-POST http://localhost:3002/api/v1/stock/create/
-Content-Type: application/json
-
-{
-"stock_sp_id": "3",
-"stock_name": "HDFC Bank Ltd"
-}
-
-### Find All
-GET  http://localhost:3002/api/v1/stock/available-stocks/
-Content-Type: application/json
-
-### sold-out-stocks
-GET  http://localhost:3002/api/v1/stock/sold-out-stocks/
-Content-Type: application/json
-
-## sell-stock
-
-### SHARE   
-
-### Create share
-POST http://localhost:3002/api/v1/share/create/
-Content-Type: application/json
-
-{
-"share_id": "11",
-"share_name": "test stock Name",
-"cloudnery_id": "stirng",
-"share_companyType": "company Type",
-"face_value": "0",
-"price_per_lot": 1,
-"share_quantity": "2",
-"share_discription": "stock discription",
-"share_status": "Available",
-"share_icon": "url ",
-"avaiable_on": "NSDL"
-}
-
 ###
+https://agoi-api.herokuapp.com/ 
+url = http://localhost:3002/
 
-### Find All SHARE
-GET  http://localhost:3002/api/v1/share/findAll/
+
+###################### STARTE ######################################
+
+### => login
+POST  http://localhost:3002/api/v1/auth/login
 Content-Type: application/json
+
+{
+"mobile_number": 123456781,
+"password": "password"
+}
+
+
+########## SHARE 
 
 
 ### Find All Stock
@@ -57,20 +23,33 @@ GET  http://localhost:3002/api/v1/stock/findAll/
 Content-Type: application/json
 
 
-### Find Share By Id
-GET  http://localhost:3002/api/v1/share/62c0fd1f23eac2c9d19ab911
+### create stock
+POST http://localhost:3002/api/v1/stock/create/
 Content-Type: application/json
 
-### Delete share By Id
-DELETE   http://localhost:3002/api/v1/share/62c0fd2523eac2c9d19ab913
-Content-Type: application/json
+### postman
 
-### Find all User
-GET  http://localhost:3002/api/v1/user
+### edit by ID
+not compleated
 
-###
+### delete by ID 
+DELETE https://agoi-api.herokuapp.com/api/v1/stock/62d42cbc496b9458427a7ef3 
 
-### Edit wallet amount 
+### get by ID
+
+
+########## USER 
+
+### get all
+GET  https://agoi-api.herokuapp.com/api/v1/user 
+
+### delete by Id 
+DELETE http://localhost:3002/api/v1/user/:id
+
+### get by ID
+GET https://agoi-api.herokuapp.com/api/v1/user/62d83d8cf9e2a2fa687843f2 HTTP/1.1
+
+### edit wallet balance by ID 
 POST http://localhost:3002/api/v1/user/edit-walate-amount/62d44229a4e2089d14020c4e
 Content-Type: application/json
 
@@ -78,6 +57,86 @@ Content-Type: application/json
 "mobile_number": "1234567891",
 "wallet_balance": 60
 }
+
+########## KYC
+
+### get all 
+
+### get by ID 
+
+### change kyc statu  with reason 
+
+
+########## ORDER 
+
+### get all
+
+### get all sell order
+
+### get all  purchase order
+
+### get order by ID 
+GET http://localhost:3002/api/v1/user/order/ee306c630f51bc6da56301bb2a5fea5f HTTP/1.1
+
+### change order status with reason 
+
+########## NOTIFY USER 
+
+###  Send notification to user (multipul)
+
+### get notification history 
+
+########## CASH OUT  ( after selling the order  generate a cash out )
+
+### GET ALL  
+
+### get by ID 
+
+### change cash out status with reasion 
+
+########## edit admin user  (logged in user in admin)    name email or password 
+POST  http://localhost:3002/api/v1/user/editadmin
+Content-Type: application/json
+
+{
+    "name": "user",
+    "email_id": "user@user.com",
+    "mobile_number": "1234"
+}
+
+######################### END #####################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### STOCK
+
+### Create
+
+
+### Find All
+
+### sold-out-stocks
+GET  http://localhost:3002/api/v1/stock/sold-out-stocks/
+Content-Type: application/json
+
+## sell-stock
+
+
+### Edit wallet amount 
+
 
 POST http://localhost:3002/api/v1/stock/create/
 Content-Type: application/json
@@ -121,24 +180,10 @@ GET http://localhost:3002/api/v1/user/getKYC/62d44229a4e2089d14020c4e
 
 ### => Get All Purchase Order
 
-### => login
-POST  http://localhost:3002/api/v1/auth/login
-Content-Type: application/json
 
-{
-"mobile_number": 123456781,
-"password": "password"
-}
 
 ### edit user admin details
-POST  http://localhost:3002/api/v1/user/editadmin
-Content-Type: application/json
 
-{
-    "name": "user",
-    "email_id": "user@user.com",
-    "mobile_number": "1234"
-}
 
 ### edit user admin details
 GET  http://localhost:3002/api/v1/order
@@ -161,5 +206,74 @@ Content-Type: application/json
 GET  http://localhost:3002/api/v1/user/order
 Content-Type: application/json
 
+### avilable
+GET http://localhost:3002/api/v1/user/order/available
+
+
+
 ### GET ORDER By order_id
-GET http://localhost:3002/api/v1/user/order/ee306c630f51bc6da56301bb2a5fea5f HTTP/1.1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### other
+
+
+### SHARE   
+
+### Create share
+POST http://localhost:3002/api/v1/share/create/
+Content-Type: application/json
+
+{
+"share_id": "11",
+"share_name": "test stock Name",
+"cloudnery_id": "stirng",
+"share_companyType": "company Type",
+"face_value": "0",
+"price_per_lot": 1,
+"share_quantity": "2",
+"share_discription": "stock discription",
+"share_status": "Available",
+"share_icon": "url ",
+"avaiable_on": "NSDL"
+}
+
+###
+
+
+
+### Find Share By Id
+GET  http://localhost:3002/api/v1/share/62c0fd1f23eac2c9d19ab911
+Content-Type: application/json
+
+### Delete share By Id
+DELETE   http://localhost:3002/api/v1/share/62c0fd2523eac2c9d19ab913
+Content-Type: application/json
+
+

@@ -229,7 +229,7 @@ exports.getAll = async (req, res, next) => {
 exports.availableOrder = async (req, res, next) => {
   try {
     console.log("available order")
-    let result = await Order.find({ order_status: "Available" });
+    let result = await Order.find({ order_status: "ACTIVE" });
     res.send({
       message: "stock created successfully",
       data: result,
