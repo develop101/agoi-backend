@@ -22,7 +22,7 @@ router.delete("/:id", deleteUserById);
 router.get("/:id",findById);
 router.route("/edit-wallet/:id").post(EditWalletAmount);
 router.get("/kyc/all", kyc);
-router.get("/getKYC/:id", getKYCDetails);
+router.get("/kyc/:id", getKYCDetails);
 //router.route("/editadmin1").post(editUserById);
 router.route("/editadmin").post(editAdminDetails);
 

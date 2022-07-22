@@ -260,9 +260,10 @@ return res.send({
 
 exports.getKYCDetails = async (req, res, next) => {
   try {
-    console.log(req.params.id);
     const kycData = await User.findById(req.params.id);
-
+    if (!kycData) {
+      return res.send({ error: true, message: "user not found" });
+    }
    const kycObj = {
     mobile_number: kycData.mobile_number,
     email_id: kycData.email_id,

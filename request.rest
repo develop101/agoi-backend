@@ -64,6 +64,8 @@ Content-Type: application/json
 GET http://localhost:3002/api/v1/user/kyc/all HTTP/1.1
 
 ### get by ID 
+GET http://localhost:3002/api/v1/user/kyc/62d83d8cf9e2a2fa687843f2
+
 
 ### change kyc statu  with reason 
 
@@ -170,11 +172,6 @@ Content-Type: application/json
 }
 
 ### get all
-GET http://localhost:3002/api/v1/user/getallKYC
-
-### get by ID
-GET http://localhost:3002/api/v1/user/getKYC/62d44229a4e2089d14020c4e
-
 ### => Get All Purchase Order
 
 
