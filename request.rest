@@ -241,8 +241,6 @@ Content-Type: application/json
 
 ### Find all User
 
-### KYC
-
 ### addKYC
 POST  http://localhost:3002/api/v1/user/addKYC
 Content-Type: application/json
@@ -266,14 +264,6 @@ Content-Type: application/json
 ### => Get All Purchase Order
 
 
-
-### edit user admin details
-
-
-### edit user admin details
-GET  http://localhost:3002/api/v1/order
-Content-Type: application/json
-
 ###Order
 
 ### create
@@ -293,72 +283,3 @@ Content-Type: application/json
 
 ### avilable
 GET http://localhost:3002/api/v1/user/order/available
-
-
-
-### GET ORDER By order_id
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-### other
-
-
-### SHARE   
-
-### Create share
-POST http://localhost:3002/api/v1/share/create/
-Content-Type: application/json
-
-{
-"share_id": "11",
-"share_name": "test stock Name",
-"cloudnery_id": "stirng",
-"share_companyType": "company Type",
-"face_value": "0",
-"price_per_lot": 1,
-"share_quantity": "2",
-"share_discription": "stock discription",
-"share_status": "Available",
-"share_icon": "url ",
-"avaiable_on": "NSDL"
-}
-
-###
-
-
-
-### Find Share By Id
-GET  http://localhost:3002/api/v1/share/62c0fd1f23eac2c9d19ab911
-Content-Type: application/json
-
-### Delete share By Id
-DELETE   http://localhost:3002/api/v1/share/62c0fd2523eac2c9d19ab913
-Content-Type: application/json
-
-

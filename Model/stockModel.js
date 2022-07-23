@@ -53,9 +53,9 @@ let stockSchema = new mongoose.Schema(
       default: 1,
     },
     available_on: {
-      type: mongoose.Schema.Types.String,
-      enum: ["NSDL", "CDSL", "NSDL And CSDL"],
-      default: "NSDL",
+      type: mongoose.Schema.Types.Array,
+      // enum: ["NSDL", "CDSL", "NSDL And CSDL"],
+      // default: "NSDL",
     },
     share_per_lot: {
       type: mongoose.Schema.Types.Number,
