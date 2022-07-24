@@ -262,6 +262,7 @@ exports.kyc = async (req, res, next) => {
   kycData.forEach(async (kyc) => {
    kyc = {
     _id: kyc.id,
+    name: kyc.name,
     mobile_number: kyc.mobile_number,
     email_id: kyc.email_id,
     demat_acc_no: kyc.demat_acc_no,
@@ -295,6 +296,8 @@ exports.getKYCDetails = async (req, res, next) => {
       return res.send({ error: true, message: "user not found" });
     }
    const kycObj = {
+    _id: kycData.id,
+    name: kycData.name,
     mobile_number: kycData.mobile_number,
     email_id: kycData.email_id,
     demat_acc_no: kycData.demat_acc_no,
