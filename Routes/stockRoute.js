@@ -56,13 +56,13 @@ router.post('/create', upload.single("image"), async (req, res) => {
 });
 
 
-router.post('/edit', async (req, res) => {
+router.post('/edit', async (req, res, next) => {
   try{
     //let id = req.params.id;
     //console.log(id)
      let data = req.body;
-     console.log(data);
-     console.log(req.body.stock_name);
+     console.log(req.body);
+     //console.log(req.body.stock_name);
      //const stockData = await Stock.findById(req.params.id);
 
     // if (!stockData) {
@@ -99,10 +99,10 @@ router.post('/edit', async (req, res) => {
 
     //await stockData.save();
 
-    // res.send({
-    //   message: "Stock successfully updated",
-    //   data: savedShare,
-    // });
+    res.send({
+      message: "Stock successfully updated",
+      data: data,
+    });
   }catch (err ){
     res.send({
       message: err.message,
