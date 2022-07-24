@@ -134,7 +134,7 @@ exports.orderStatus = async (req, res, next) => {
 //get users byId
 exports.findById = async (req, res, next) => {
   try {
-    let result = await User.findById(req.params.id).populate('stock');  //cash out, notification
+    let result = await User.findById(req.params.id)//.populate('stock');  //cash out, notification
     res.send({
       message: "User succefully fetched",
       data: result,
