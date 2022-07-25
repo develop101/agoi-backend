@@ -10,8 +10,8 @@ const express = require("express");
 const { sellStocks } = require("../Controller/sellStocks.js");
 const router = express.Router();
 
-const  cloudinary = require("../Utils/cloudinary.js");
-const  upload  = require("../Utils/multer");
+const cloudinary = require("../Utils/cloudinary.js");
+const upload = require("../Utils/multer");
 const Stock = require("../Model/stockModel");
 
 router.get("/available-stocks", availableStock);
@@ -24,7 +24,7 @@ router.get("/:id", findById)
 
 
 router.post('/create', upload.single("image"), async (req, res) => {
-  try{
+  try {
     console.log(req.body)
     const icon = await cloudinary.uploader.upload(req.file.path)
     console.log(req.file)
@@ -32,23 +32,23 @@ router.post('/create', upload.single("image"), async (req, res) => {
     let nStock = new Stock({
       stock_name: req.body.stock_name,
       stock_icon: icon.secure_url,  //image
-      cloudinary_id: icon.cloudinary_id, 
+      cloudinary_id: icon.cloudinary_id,
       stock_sp_id: req.body.stock_sp_id,
       available_on: req.body.available_on,
       companyType: req.body.companyType,
       face_value: req.body.face_value,
-      price_per_lot: req.body.price_per_lot,  
+      price_per_lot: req.body.price_per_lot,
       share_per_lot: req.body.share_per_lot,
       discription: req.body.discription,
       stock_status: req.body.stock_status,
     })
-    let savedShare =  await Stock.create(nStock);
+    let savedShare = await Stock.create(nStock);
 
     res.send({
       message: "Stock successfully created",
       data: savedShare,
     });
-  }catch (err ){
+  } catch (err) {
     res.send({
       message: err.message,
     });
@@ -56,19 +56,24 @@ router.post('/create', upload.single("image"), async (req, res) => {
 });
 
 
-router.post('/edit', async (req, res, next) => {
-  try{
-    //let id = req.params.id;
-    //console.log(id)
-     let data = req.body;
-     console.log(req.body);
-     //console.log(req.body.stock_name);
-     //const stockData = await Stock.findById(req.params.id);
 
-    // if (!stockData) {
-    //   return res.send({ error: true, message: "Stock not found" });
-    // }
-   // res.send(stockData);
+router.post('/edit/:id', upload.single("image"), async (req, res, next) => {
+  try {
+    let id = req.params.id;
+    console.log("stock id == ", id)
+    console.log(req.body)
+    const icon = await cloudinary.uploader.upload(req.file.path)
+    console.log(req.file)
+    console.log(req.body)
+    let data = req.body;
+    console.log(req.body);
+    console.log(req.body.stock_name);
+    const stockData = await Stock.findById(id);
+    console.log("user data ==", stockData);
+    if (!stockData) {
+      return res.send({ error: true, message: "Stock not found" });
+    }
+    // res.send(stockData);/
     // stockData.stock_name = data.stock_name ? data.stock_name : stockData.stock_name;
     // // stockData.stock_location = data.stock_location ? data.stock_location : stockData.stock_location;
     // stockData.stock_status = data.stock_status ? data.stock_status : stockData.stock_status;
@@ -81,7 +86,7 @@ router.post('/edit', async (req, res, next) => {
     // stockData.share_per_lot = data.share_per_lot ? data.share_per_lot : stockData.share_per_lot;
 
     // const icon = await cloudinary.uploader.upload(req.file.path)
-    
+
     // let nStock = new Stock({
     //   stock_name: req.body.stock_name,
     //   stock_icon: icon.secure_url,  //image
@@ -103,12 +108,51 @@ router.post('/edit', async (req, res, next) => {
       message: "Stock successfully updated",
       data: data,
     });
-  }catch (err ){
+  } catch (err) {
     res.send({
       message: err.message,
     });
   }
 });
+
+
+
+router.post('/profile/edit/:id', async (req, res, next) => {
+  try {
+    let id = req.params.id;
+    let data = req.body;
+    console.log(req.body);
+
+    const stockData = await Stock.findById(id);
+    console.log("user data ==", stockData);
+
+    if (!stockData) {
+      return res.send({ error: true, message: "Stock not found" });
+    }
+
+    stockData.stock_name = data.stock_name ? data.stock_name : stockData.stock_name;
+    stockData.stock_sp_id = data.stock_sp_id ? data.stock_sp_id : stockData.stock_sp_id;
+    stockData.available_on = data.available_on ? data.available_on : stockData.available_on;
+    stockData.companytype = data.companytype ? data.companytype : stockData.companytype;
+    stockData.face_value = data.face_value ? data.face_value : stockData.face_value;
+    stockData.price_per_lot = data.price_per_lot ? data.price_per_lot : stockData.price_per_lot;
+    stockData.share_per_lot = data.share_per_lot ? data.share_per_lot : stockData.share_per_lot;
+    stockData.discription = data.discription ? data.discription : stockData.discription;
+    stockData.stock_status = data.stock_status ? data.stock_status : stockData.stock_status;
+
+    await stockData.save();
+
+    res.send({
+      message: "Stock successfully updated",
+      data: stockData,
+    });
+  } catch (err) {
+    res.send({
+      message: err.message,
+    });
+  }
+});
+
 
 
 module.exports = router;
