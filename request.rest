@@ -29,7 +29,12 @@ Content-Type: application/json
 
 ### postman
 
-### edit by ID
+### edit only Icon by ID
+POST http://localhost:3002/api/v1/stock/icon/edit/:id
+Content-Type: multipart/form-data       
+
+### edit only details 
+
 not compleated
 
 ### delete by ID 

@@ -154,5 +154,35 @@ router.post('/profile/edit/:id', async (req, res, next) => {
 });
 
 
+router.post('/icon/edit/:id', upload.single("image"), async (req, res) => {
+  try {
+    let id = req.params.id;
+    let data = req.body;
+    console.log(req.body);
+console.log("edit icon =", id);
+    const stockData = await Stock.findById(id);
+    console.log("user data ==", stockData);
+
+    if (!stockData) {
+      return res.send({ error: true, message: "Stock not found" });
+    }
+    const icon = await cloudinary.uploader.upload(req.file.path)
+    
+    console.log(req.file)
+    console.log(req.body)
+    
+    stockData.stock_icon = icon.secure_url ? icon.secure_url : stockData.secure_url;
+    stockData.cloudinary_id = icon.cloudinary_id ? icon.cloudinary_id : stockData.cloudinary_id;
+    await stockData.save();
+    res.send({
+      message: "Stock icon successfully edited",
+      data: stockData,
+    });
+  } catch (err) {
+    res.send({
+      message: err.message,
+    });
+  }
+});
 
 module.exports = router;
