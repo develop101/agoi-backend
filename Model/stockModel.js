@@ -27,6 +27,7 @@ let stockSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.String,
       trim: true,
       enum: ["Available", "Sold Out"],
+      default: "Available"
     },
     face_value: {
       type: mongoose.Schema.Types.Number,
