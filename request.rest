@@ -88,9 +88,11 @@ Content-Type: application/json
 GET https://agoi-api.herokuapp.com/api/v1/user/order
 
 ### get all sell order
+#sell stock entity
+GET http://localhost:3002/api/v1/user/order/sell
 
 ### get all  purchase order
-
+ new order  order entity
 ### get order by ID 
 GET http://localhost:3002/api/v1/user/order/62d847c0b8c0d49c3b6f9bd4 HTTP/1.1
 

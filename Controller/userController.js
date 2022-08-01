@@ -3,6 +3,7 @@ const User = require("../Model/userModel");
 const crypto = require("crypto");
 const Order = require("../Model/orderModel");
 const Notification = require("../Model/notificationModel");
+const SellStock = require("../Model/sellStocksModel");
 exports.createUserByContact = async (req, res, next) => {
   try {
     console.log(req.body);
@@ -77,6 +78,22 @@ exports.getAllOrder = async (req, res, next) => {
     let result = await Order.find();
     res.send({
       message: "List of All Order",
+      data: result,
+    });
+  } catch (err) {
+    console.log(err);
+    res.send({
+      message: err.message,
+    });
+  }
+};
+
+//get all sell order
+exports.getAllSellOrder = async (req, res, next) => {
+  try {
+    let result = await SellStock.find();
+    res.send({
+      message: "List of All sell Order",
       data: result,
     });
   } catch (err) {
