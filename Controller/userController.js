@@ -88,6 +88,22 @@ exports.getAllOrder = async (req, res, next) => {
   }
 };
 
+//get all Order
+exports.getAllPurchaseOrder = async (req, res, next) => {
+  try {
+    let result = await Order.find();
+    res.send({
+      message: "List of All Purchase Order",
+      data: result,
+    });
+  } catch (err) {
+    console.log(err);
+    res.send({
+      message: err.message,
+    });
+  }
+};
+
 //get all sell order
 exports.getAllSellOrder = async (req, res, next) => {
   try {
