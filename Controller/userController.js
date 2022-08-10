@@ -685,7 +685,8 @@ exports.cashoutStatus = async (req, res, next) => {
       return res.send({ error: true, message: "cashout not found" });
     }
     
-    cashoutData.cashout_status = data.cashout_status ? data.cashout_status : cashoutData.cashout_status;
+    //cashoutData.cashout_status = data.cashout_status ? data.cashout_status : cashoutData.cashout_status;
+    cashoutData.cashout_status = data.cashout_status;
     cashoutData.cashout_feedback = data.cashout_feedback ? data.cashout_feedback : cashoutData.cashout_feedback;
     
     await cashoutData.save()
