@@ -4,6 +4,7 @@ const crypto = require("crypto");
 const Order = require("../Model/orderModel");
 const Notification = require("../Model/notificationModel");
 const SellStock = require("../Model/sellStocksModel");
+const Cashout = require("../Model/cashoutModel");
 exports.createUserByContact = async (req, res, next) => {
   try {
     console.log(req.body);
@@ -77,9 +78,10 @@ exports.getAllOrder = async (req, res, next) => {
   try {
     let result = await Order.find();
     let result1 = await SellStock.find();
+    let merged = result.concat(result1);
     res.send({
       message: "List of All Order",
-      data: [result,result1],
+      data: merged,
     });
   } catch (err) {
     console.log(err);
@@ -611,3 +613,89 @@ exports.getAllNotification = async (req, res, next) => {
     });
   }
 };
+
+// CASHOUT START
+
+//create
+exports.createCashout = async (req, res) => {
+  try {
+    console.log(req.body)
+    let nCashout = new Cashout({
+      cashout_status: req.body.cashout_status,
+      cashout_feedback:  req.body.cashout_feedback,
+    })
+
+    let savedCashout = await Cashout.create(nCashout);
+
+    res.send({
+      message: "cashout successfully created",
+      data: savedCashout,
+    });
+  } catch (err) {
+    res.send({
+      message: err.message,
+    });
+  }
+};
+
+
+//get all cahout
+exports.getAllCashout = async (req, res, next) => {
+  try {
+    let result = await Notification.find();
+    res.send({
+      message: "List of All Notification",
+      data: result,
+    });
+  } catch (err) {
+    console.log(err);
+    res.send({
+      message: err.message,
+    });
+  }
+};
+
+//get cashout by Id
+exports.getCashoutById = async (req, res, next) => {
+  try {
+    let result = await Cashout.findById(req.params.id);
+    res.send({
+      message: "cashout",
+      data: result,
+    });
+  } catch (err) {
+    console.log(err);
+    res.send({
+      message: err.message,
+    });
+  }
+};
+
+// change cashout status
+exports.cashoutStatus = async (req, res, next) => {
+  try {
+    let id = req.params.id;
+    let data = req.body;
+    console.log("req body" , data);
+
+    const cashoutData = await Cashout.findById(id);
+    if (!cashoutData) {
+      return res.send({ error: true, message: "cashout not found" });
+    }
+    
+    cashoutData.cashout_status = data.cashout_status ? data.cashout_status : cashoutData.cashout_status;
+    cashoutData.cashout_feedback = data.cashout_feedback ? data.cashout_feedback : cashoutData.cashout_feedback;
+    
+    await cashoutData.save()
+    
+    return res.send({
+      message: "order status updated successfully",
+      data: cashoutData
+  });
+  }catch (err) {
+    res.send({
+      message: err.message,
+    })
+  }
+}
+// CASHOUT ENDS
