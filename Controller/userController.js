@@ -644,7 +644,7 @@ exports.createCashout = async (req, res) => {
 //get all cahout
 exports.getAllCashout = async (req, res, next) => {
   try {
-    let result = await Notification.find();
+    let result = await Cashout.find();
     res.send({
       message: "List of All Notification",
       data: result,
