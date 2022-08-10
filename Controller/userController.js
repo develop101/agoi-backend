@@ -621,6 +621,8 @@ exports.createCashout = async (req, res) => {
   try {
     console.log(req.body)
     let nCashout = new Cashout({
+      user_id: req.body. user_id,
+      cashout_amount : req.body.cashout_amount,
       cashout_status: req.body.cashout_status,
       cashout_feedback:  req.body.cashout_feedback,
     })
