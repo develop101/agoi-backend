@@ -130,7 +130,7 @@ GET http://localhost:3002/api/v1/user/notify/all HTTP/1.1
 ########## CASH OUT  ( after selling the order  generate a cash out )
 
 ### GET ALL 
-
+GET http://localhost:3002/api/v1/user/cashout/all
 
 ### get by ID 
 

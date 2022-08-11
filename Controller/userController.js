@@ -684,9 +684,10 @@ exports.createCashout = async (req, res) => {
 //get all cahout
 exports.getAllCashout = async (req, res, next) => {
   try {
-    let result = await Cashout.find();
+    let result = await Cashout.find().populate('user_id');
+ 
     res.send({
-      message: "List of All Notification",
+      message: "List of All Cashout",
       data: result,
     });
   } catch (err) {
@@ -725,7 +726,6 @@ exports.cashoutStatus = async (req, res, next) => {
       return res.send({ error: true, message: "cashout not found" });
     }
     
-    //cashoutData.cashout_status = data.cashout_status ? data.cashout_status : cashoutData.cashout_status;
     cashoutData.cashout_status = data.cashout_status;
     cashoutData.cashout_feedback = data.cashout_feedback ? data.cashout_feedback : cashoutData.cashout_feedback;
     
