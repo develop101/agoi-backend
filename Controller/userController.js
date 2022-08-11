@@ -685,10 +685,22 @@ exports.createCashout = async (req, res) => {
 exports.getAllCashout = async (req, res, next) => {
   try {
     let result = await Cashout.find().populate('user_id');
+    let data = [];
+
+    result.forEach( obj => {
+      let cashoutObj = {
+        id: obj._id,
+        userDetail: obj.user_id,
+        cashout_amount: obj.cashout_amount,
+        cashout_status: obj.cashout_status,
+        cashout_feedback: obj.cashout_feedback
+      }
+      data.push(cashoutObj);
+    })
  
     res.send({
       message: "List of All Cashout",
-      data: result,
+      data: data,
     });
   } catch (err) {
     console.log(err);
@@ -701,10 +713,18 @@ exports.getAllCashout = async (req, res, next) => {
 //get cashout by Id
 exports.getCashoutById = async (req, res, next) => {
   try {
-    let result = await Cashout.findById(req.params.id);
+    let result = await Cashout.findById(req.params.id).populate('user_id');
+    console.log(result);
+    let obj = {
+      id: result._id,
+      userDetail: result.user_id,
+      cashout_amount: result.cashout_amount,
+      cashout_status: result.cashout_status,
+      cashout_feedback: result.cashout_feedback
+    }
     res.send({
       message: "cashout",
-      data: result,
+      data: obj,
     });
   } catch (err) {
     console.log(err);
@@ -719,7 +739,6 @@ exports.cashoutStatus = async (req, res, next) => {
   try {
     let id = req.params.id;
     let data = req.body;
-    console.log("req body" , data);
 
     const cashoutData = await Cashout.findById(id);
     if (!cashoutData) {
@@ -741,4 +760,5 @@ exports.cashoutStatus = async (req, res, next) => {
     })
   }
 }
+
 // CASHOUT ENDS
