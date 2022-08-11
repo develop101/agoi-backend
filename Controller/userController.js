@@ -77,7 +77,7 @@ exports.getAll = async (req, res, next) => {
 //get all Order
 exports.getAllOrder = async (req, res, next) => {
   try {
-    let result = await Order.find();
+    let result = await Order.find().populate('user_id stock_id');
     let orderArry = []
 
     result.forEach( obj => {
@@ -100,7 +100,7 @@ exports.getAllOrder = async (req, res, next) => {
       orderArry.push(orderObj)
     })
 
-    let result1 = await SellStock.find();
+    let result1 = await SellStock.find().populate('user_id stock_id');
    
     let orderArry1 = []
 
@@ -132,7 +132,7 @@ exports.getAllOrder = async (req, res, next) => {
 //get all Order
 exports.getAllPurchaseOrder = async (req, res, next) => {
   try {
-    let result = await Order.find();
+    let result = await Order.find().populate('user_id stock_id');
     res.send({
       message: "List of All Purchase Order",
       data: result,
@@ -148,7 +148,7 @@ exports.getAllPurchaseOrder = async (req, res, next) => {
 //get all sell order
 exports.getAllSellOrder = async (req, res, next) => {
   try {
-    let result = await SellStock.find();
+    let result = await SellStock.find().populate('user_id stock_id');
     res.send({
       message: "List of All sell Order",
       data: result,
@@ -164,7 +164,7 @@ exports.getAllSellOrder = async (req, res, next) => {
 //get order by order_Id
 exports.getOrderById = async (req, res, next) => {
   try {
-    let result = await Order.findById(req.params.id);
+    let result = await Order.findById(req.params.id).populate('user_id stock_id');
     res.send({
       message: "List of All Order",
       data: result,
@@ -585,11 +585,6 @@ exports.editAdminDetails = async (req, res, next) => {
 exports.storeNotification = async (req, res, next) => {
   try{
     let data = req.body;
-    // console.log("sotreNotification", data)
-
-    // console.log("user id ", data.userID.id);
-
-    // console.log("message ", data.message);
 
     for(let i = 0, l = data.userID.length; i < l; i++) {
    
@@ -618,14 +613,6 @@ exports.storeNotification = async (req, res, next) => {
       // We could also use `data.items[i].id`.
 
   }
-
-  // data.forEach(element => {
-  //   Userobj = {
-  //     id: element.userID,
-  //   }
-  //   console.log(Userobj);
-  // });
-
     return res.send({
       data: data
     })
@@ -638,7 +625,7 @@ exports.storeNotification = async (req, res, next) => {
   }
 }
 
-//get all users
+//get all Notifications
 exports.getAllNotification = async (req, res, next) => {
   try {
     let result = await Notification.find();
