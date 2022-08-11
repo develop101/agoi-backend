@@ -73,12 +73,50 @@ exports.getAll = async (req, res, next) => {
     });
   }
 };
+// ORDER START 
 //get all Order
 exports.getAllOrder = async (req, res, next) => {
   try {
     let result = await Order.find();
+    let orderArry = []
+
+    result.forEach( obj => {
+      let orderObj = {
+        order_id: obj.order_id,
+        price_per_share: obj.price_per_share,
+        user_id: obj.user_id,
+        order_amount: obj.order_amount,
+        order_status: obj.order_status,
+        order_token: obj.order_token,
+        order_note: obj.order_note,
+        stock_id: obj.stock_id,
+        no_of_stocks: obj.no_of_stocks,
+        left_shares: obj.left_shares,
+        no_of_lots: obj.no_of_lots, 
+        is_order_approved: obj.is_order_approved,
+        order_feedback: obj.order_feedback,
+        orderType: 'purchase'
+      }
+      orderArry.push(orderObj)
+    })
+
     let result1 = await SellStock.find();
-    let merged = result.concat(result1);
+   
+    let orderArry1 = []
+
+    result1.forEach( obj => {
+      let orderObj = {
+        order_id: obj.order_id,
+        user_id: obj.user_id,
+        stocks_qty_to_be_sold: obj.stocks_qty_to_be_sold,
+        total_amount: obj.total_amount,
+        request_status: obj.request_status,
+        orderType: 'sell'
+      }
+      orderArry1.push(orderObj)
+    })
+   
+    let merged = orderArry.concat(orderArry1);
     res.send({
       message: "List of All Order",
       data: merged,
@@ -166,6 +204,8 @@ exports.orderStatus = async (req, res, next) => {
     })
   }
 }
+
+//ORDER ENDS
 
 //get users byId
 exports.findById = async (req, res, next) => {
