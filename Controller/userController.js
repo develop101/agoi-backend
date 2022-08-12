@@ -80,11 +80,11 @@ exports.getAllOrder = async (req, res, next) => {
     let result = await Order.find().populate('user_id');
     let orderArry = []
 
-    result.forEach( obj => {
+    result.forEach(obj => {
       let orderObj = {
         order_id: obj.order_id,
         price_per_share: obj.price_per_share,
-        userDetail: obj.user_id,
+        user_Id: obj.user_id,
         order_amount: obj.order_amount,
         order_status: obj.order_status,
         order_token: obj.order_token,
@@ -92,7 +92,7 @@ exports.getAllOrder = async (req, res, next) => {
         stock_id: obj.stock_id,
         no_of_stocks: obj.no_of_stocks,
         left_shares: obj.left_shares,
-        no_of_lots: obj.no_of_lots, 
+        no_of_lots: obj.no_of_lots,
         is_order_approved: obj.is_order_approved,
         order_feedback: obj.order_feedback,
         orderType: 'purchase'
@@ -101,13 +101,13 @@ exports.getAllOrder = async (req, res, next) => {
     })
 
     let result1 = await SellStock.find().populate('user_id');
-   
+
     let orderArry1 = []
 
-    result1.forEach( obj => {
+    result1.forEach(obj => {
       let orderObj = {
         order_id: obj.order_id,
-        userDetail: obj.user_id,
+        user_Id: obj.user_id,
         stocks_qty_to_be_sold: obj.stocks_qty_to_be_sold,
         total_amount: obj.total_amount,
         request_status: obj.request_status,
@@ -115,7 +115,7 @@ exports.getAllOrder = async (req, res, next) => {
       }
       orderArry1.push(orderObj)
     })
-   
+
     let merged = orderArry.concat(orderArry1);
     res.send({
       message: "List of All Order",
@@ -182,23 +182,23 @@ exports.orderStatus = async (req, res, next) => {
   try {
     let id = req.params.id;
     let data = req.body;
-    console.log("req body" , data);
+    console.log("req body", data);
 
     const orderData = await Order.findById(id);
     if (!orderData) {
       return res.send({ error: true, message: "order not found" });
     }
-    
+
     orderData.is_order_approved = data.is_order_approved ? data.is_order_approved : orderData.is_order_approved;
     orderData.order_feedback = data.order_feedback ? data.order_feedback : orderData.order_feedback;
-    
+
     await orderData.save()
-    
+
     return res.send({
       message: "order status updated successfully",
       data: orderData
-  });
-  }catch (err) {
+    });
+  } catch (err) {
     res.send({
       message: err.message,
     })
@@ -335,30 +335,30 @@ exports.kyc = async (req, res, next) => {
   try {
     let allkyc = [];
     const kycData = await User.find();
-  kycData.forEach(async (kyc) => {
-   kyc = {
-    _id: kyc.id,
-    name: kyc.name,
-    mobile_number: kyc.mobile_number,
-    email_id: kyc.email_id,
-    demat_acc_no: kyc.demat_acc_no,
-    pan_card_number: kyc.pan_card_number,
-    pan_card_link: kyc.pan_card_link,
-    account_number: kyc.account_number,
-    account_number_link: kyc.account_number_link,
-    aadhar_number: kyc.aadhar_number,
-    demat_screenshot: kyc.demat_screenshot,
-    nominee_name: kyc.nominee_name,
-    is_completed_profile: kyc.is_completed_profile,
-    is_completed_kyc: kyc.is_completed_kyc,
-   }
-  allkyc.push(kyc);
-})
-return res.send({
-  data: allkyc
-});
+    kycData.forEach(async (kyc) => {
+      kyc = {
+        _id: kyc.id,
+        name: kyc.name,
+        mobile_number: kyc.mobile_number,
+        email_id: kyc.email_id,
+        demat_acc_no: kyc.demat_acc_no,
+        pan_card_number: kyc.pan_card_number,
+        pan_card_link: kyc.pan_card_link,
+        account_number: kyc.account_number,
+        account_number_link: kyc.account_number_link,
+        aadhar_number: kyc.aadhar_number,
+        demat_screenshot: kyc.demat_screenshot,
+        nominee_name: kyc.nominee_name,
+        is_completed_profile: kyc.is_completed_profile,
+        is_completed_kyc: kyc.is_completed_kyc,
+      }
+      allkyc.push(kyc);
+    })
+    return res.send({
+      data: allkyc
+    });
 
-  }catch (err) {
+  } catch (err) {
     res.send({
       message: err.message,
     })
@@ -371,28 +371,28 @@ exports.getKYCDetails = async (req, res, next) => {
     if (!kycData) {
       return res.send({ error: true, message: "user not found" });
     }
-   const kycObj = {
-    _id: kycData.id,
-    name: kycData.name,
-    mobile_number: kycData.mobile_number,
-    email_id: kycData.email_id,
-    demat_acc_no: kycData.demat_acc_no,
-    pan_card_number: kycData.pan_card_number,
-    pan_card_link: kycData.pan_card_link,
-    account_number: kycData.account_number,
-    account_number_link: kycData.account_number_link,
-    aadhar_number: kycData.aadhar_number,
-    demat_screenshot: kycData.demat_screenshot,
-    nominee_name: kycData.nominee_name,
-    is_completed_profile: kycData.is_completed_profile,
-    is_completed_kyc: kycData.is_completed_kyc,
-    is_approved: kycData.is_approved,
-   }
+    const kycObj = {
+      _id: kycData.id,
+      name: kycData.name,
+      mobile_number: kycData.mobile_number,
+      email_id: kycData.email_id,
+      demat_acc_no: kycData.demat_acc_no,
+      pan_card_number: kycData.pan_card_number,
+      pan_card_link: kycData.pan_card_link,
+      account_number: kycData.account_number,
+      account_number_link: kycData.account_number_link,
+      aadhar_number: kycData.aadhar_number,
+      demat_screenshot: kycData.demat_screenshot,
+      nominee_name: kycData.nominee_name,
+      is_completed_profile: kycData.is_completed_profile,
+      is_completed_kyc: kycData.is_completed_kyc,
+      is_approved: kycData.is_approved,
+    }
 
-   return res.send({
-    data: kycObj
-  });
-  }catch (err) {
+    return res.send({
+      data: kycObj
+    });
+  } catch (err) {
     res.send({
       message: err.message,
     })
@@ -404,7 +404,7 @@ exports.kycStatus = async (req, res, next) => {
   try {
     let id = req.params.id;
     let data = req.body;
-    console.log("req body" , data);
+    console.log("req body", data);
 
     const kycData = await User.findById(id);
     if (!kycData) {
@@ -413,14 +413,14 @@ exports.kycStatus = async (req, res, next) => {
 
     kycData.is_kyc_approved = data.is_kyc_approved ? data.is_kyc_approved : kycData.is_kyc_approved;
     kycData.kyc_feedback = data.kyc_feedback ? data.kyc_feedback : kycData.kyc_feedback;
-  
+
     await kycData.save()
-    
-   return res.send({
-    message: "kyc status updated",
-    data: kycData
-  });
-  }catch (err) {
+
+    return res.send({
+      message: "kyc status updated",
+      data: kycData
+    });
+  } catch (err) {
     res.send({
       message: err.message,
     })
@@ -484,9 +484,9 @@ exports.editUserById1 = async (req, res, next) => {
     const id = req.params.id;
     const data = req.body;
     const userData = await User.findById(id);
-    
-    if(!userDate) {
-      return res.send({ message: "user not found"});
+
+    if (!userDate) {
+      return res.send({ message: "user not found" });
     }
 
     userData.name = data.name ? data.name : userData.name;
@@ -515,14 +515,14 @@ exports.editUserById = async (req, res, next) => {
     const userData = await User.findOne({
       mobile_number: data.mobile_number,
     });
-    
-    if(!userDate) {
-      return res.send({ error: true, message: "user not found"});
+
+    if (!userDate) {
+      return res.send({ error: true, message: "user not found" });
     }
 
     userData.name = data.name ? data.name : userData.name;
     userData.email_id = data.email_id ? data.email_id : userData.email_id;
-   // userData.mobile_number = data.mobile_number ? data.mobile_number : userData.mobile_number;
+    // userData.mobile_number = data.mobile_number ? data.mobile_number : userData.mobile_number;
 
     //name, email, mobile & password
 
@@ -560,7 +560,7 @@ exports.editAdminDetails = async (req, res, next) => {
     result.email_id = data.email_id ? data.email_id : result.email_id;
     result.name = data.name ? data.name : result.name;
     result.mobile_number = data.mobile_number ? data.mobile_number : result.mobile_number;
-   // userData.mobile_number = data.mobile_number ? data.mobile_number : userData.mobile_number;
+    // userData.mobile_number = data.mobile_number ? data.mobile_number : userData.mobile_number;
 
     // result.demat_acc_no = data.demat_acc_no
     //   ? data.demat_acc_no
@@ -568,7 +568,7 @@ exports.editAdminDetails = async (req, res, next) => {
     // result.pan_card_number = data.pan_card_number
     //   ? data.pan_card_number
     //   : result.pan_card_link;
- 
+
     await result.save();
     res.send({
       message: "user found",
@@ -583,41 +583,41 @@ exports.editAdminDetails = async (req, res, next) => {
 };
 
 exports.storeNotification = async (req, res, next) => {
-  try{
+  try {
     let data = req.body;
 
-    for(let i = 0, l = data.userID.length; i < l; i++) {
-   
-       var obj = data.userID[i];
-       var id = obj.id   // user id 
-       var message = data.message; // message
-      
+    for (let i = 0, l = data.userID.length; i < l; i++) {
+
+      var obj = data.userID[i];
+      var id = obj.id   // user id 
+      var message = data.message; // message
+
       console.log(id, message)
 
-      notifyObj = new Notification ({
+      notifyObj = new Notification({
         user_id: obj.id,
         message: message
-      }); 
+      });
 
       await notifyObj.save()
       console.log(notifyObj);
 
 
-    
 
-       //var userData = await User.findById(id);
-      
+
+      //var userData = await User.findById(id);
+
 
       // Since each element is an object (in our example),
       // we can now access the objects properties with `obj.id` and `obj.name`. 
       // We could also use `data.items[i].id`.
 
-  }
+    }
     return res.send({
       data: data
     })
 
-  }catch (err) {
+  } catch (err) {
     console.log(err);
     res.send({
       message: err.message,
@@ -631,12 +631,13 @@ exports.getAllNotification = async (req, res, next) => {
     let result = await Notification.find().populate('user_id');
     let data = [];
 
-    result.forEach( obj => {
-      let notificationObj = { ...obj._doc,
+    result.forEach(obj => {
+      let notificationObj = {
+        ...obj._doc,
       };
       data.push(notificationObj);
     })
-    
+
     res.send({
       message: "List of All Notification",
       data: data
@@ -656,10 +657,10 @@ exports.createCashout = async (req, res) => {
   try {
     console.log(req.body)
     let nCashout = new Cashout({
-      user_id: req.body. user_id,
-      cashout_amount : req.body.cashout_amount,
+      user_id: req.body.user_id,
+      cashout_amount: req.body.cashout_amount,
       cashout_status: req.body.cashout_status,
-      cashout_feedback:  req.body.cashout_feedback,
+      cashout_feedback: req.body.cashout_feedback,
     })
 
     let savedCashout = await Cashout.create(nCashout);
@@ -682,17 +683,17 @@ exports.getAllCashout = async (req, res, next) => {
     let result = await Cashout.find().populate('user_id');
     let data = [];
 
-    result.forEach( obj => {
+    result.forEach(obj => {
       let cashoutObj = {
         id: obj._id,
-        userDetail: obj.user_id,
+        user_Id: obj.user_id,
         cashout_amount: obj.cashout_amount,
         cashout_status: obj.cashout_status,
         cashout_feedback: obj.cashout_feedback
       }
       data.push(cashoutObj);
     })
- 
+
     res.send({
       message: "List of All Cashout",
       data: data,
@@ -712,7 +713,7 @@ exports.getCashoutById = async (req, res, next) => {
     console.log(result);
     let obj = {
       id: result._id,
-      userDetail: result.user_id,
+      user_Id: result.user_id,
       cashout_amount: result.cashout_amount,
       cashout_status: result.cashout_status,
       cashout_feedback: result.cashout_feedback
@@ -739,17 +740,17 @@ exports.cashoutStatus = async (req, res, next) => {
     if (!cashoutData) {
       return res.send({ error: true, message: "cashout not found" });
     }
-    
+
     cashoutData.cashout_status = data.cashout_status;
     cashoutData.cashout_feedback = data.cashout_feedback ? data.cashout_feedback : cashoutData.cashout_feedback;
-    
+
     await cashoutData.save()
-    
+
     return res.send({
       message: "order status updated successfully",
       data: cashoutData
-  });
-  }catch (err) {
+    });
+  } catch (err) {
     res.send({
       message: err.message,
     })
