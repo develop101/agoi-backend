@@ -595,7 +595,7 @@ exports.storeNotification = async (req, res, next) => {
       console.log(id, message)
 
       notifyObj = new Notification ({
-        id: obj.id,
+        user_id: obj.id,
         message: message
       }); 
 
@@ -628,10 +628,18 @@ exports.storeNotification = async (req, res, next) => {
 //get all Notifications
 exports.getAllNotification = async (req, res, next) => {
   try {
-    let result = await Notification.find();
+    let result = await Notification.find().populate('user_id');
+    let data = [];
+
+    result.forEach( obj => {
+      let notificationObj = { ...obj._doc,
+      };
+      data.push(notificationObj);
+    })
+    
     res.send({
       message: "List of All Notification",
-      data: result,
+      data: data
     });
   } catch (err) {
     console.log(err);
