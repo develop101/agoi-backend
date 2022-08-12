@@ -82,6 +82,7 @@ exports.getAllOrder = async (req, res, next) => {
 
     result.forEach(obj => {
       let orderObj = {
+        _id: obj._id,
         order_id: obj.order_id,
         price_per_share: obj.price_per_share,
         user_id: obj.user_id,
@@ -106,6 +107,7 @@ exports.getAllOrder = async (req, res, next) => {
 
     result1.forEach(obj => {
       let orderObj = {
+        _id: obj._id,
         order_id: obj.order_id,
         user_id: obj.user_id,
         stocks_qty_to_be_sold: obj.stocks_qty_to_be_sold,
