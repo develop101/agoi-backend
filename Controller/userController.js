@@ -77,14 +77,14 @@ exports.getAll = async (req, res, next) => {
 //get all Order
 exports.getAllOrder = async (req, res, next) => {
   try {
-    let result = await Order.find().populate('user_id stock_id');
+    let result = await Order.find().populate('user_id');
     let orderArry = []
 
     result.forEach( obj => {
       let orderObj = {
         order_id: obj.order_id,
         price_per_share: obj.price_per_share,
-        user_id: obj.user_id,
+        userDetail: obj.user_id,
         order_amount: obj.order_amount,
         order_status: obj.order_status,
         order_token: obj.order_token,
@@ -100,14 +100,14 @@ exports.getAllOrder = async (req, res, next) => {
       orderArry.push(orderObj)
     })
 
-    let result1 = await SellStock.find().populate('user_id stock_id');
+    let result1 = await SellStock.find().populate('user_id');
    
     let orderArry1 = []
 
     result1.forEach( obj => {
       let orderObj = {
         order_id: obj.order_id,
-        user_id: obj.user_id,
+        userDetail: obj.user_id,
         stocks_qty_to_be_sold: obj.stocks_qty_to_be_sold,
         total_amount: obj.total_amount,
         request_status: obj.request_status,
@@ -132,7 +132,7 @@ exports.getAllOrder = async (req, res, next) => {
 //get all Order
 exports.getAllPurchaseOrder = async (req, res, next) => {
   try {
-    let result = await Order.find().populate('user_id stock_id');
+    let result = await Order.find().populate('user_id');
     res.send({
       message: "List of All Purchase Order",
       data: result,
@@ -148,7 +148,7 @@ exports.getAllPurchaseOrder = async (req, res, next) => {
 //get all sell order
 exports.getAllSellOrder = async (req, res, next) => {
   try {
-    let result = await SellStock.find().populate('user_id stock_id');
+    let result = await SellStock.find().populate('user_id');
     res.send({
       message: "List of All sell Order",
       data: result,
