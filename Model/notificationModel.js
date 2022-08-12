@@ -3,10 +3,10 @@ const Schema = mongoose.Schema;
 
 
 const NotificationSchema = new Schema({
-  user_id: {
+  user_id: [{
     type: Schema.Types.ObjectId,
     ref: "User"
-  },
+  }],
   message: {
     type: Schema.Types.String,
     required: true

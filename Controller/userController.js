@@ -587,36 +587,24 @@ exports.editAdminDetails = async (req, res, next) => {
 exports.storeNotification = async (req, res, next) => {
   try {
     let data = req.body;
+    let ndata = [];
 
-    for (let i = 0, l = data.userID.length; i < l; i++) {
+    for (let i = 0, l = data.user_id.length; i < l; i++) {
 
-      var obj = data.userID[i];
-      var id = obj.id   // user id 
-      var message = data.message; // message
+      var obj = data.user_id[i];
+      var id = obj  // user id 
 
-      console.log(id, message)
-
-      notifyObj = new Notification({
-        user_id: obj.id,
-        message: message
-      });
-
-      await notifyObj.save()
-      console.log(notifyObj);
-
-
-
-
-      //var userData = await User.findById(id);
-
-
-      // Since each element is an object (in our example),
-      // we can now access the objects properties with `obj.id` and `obj.name`. 
-      // We could also use `data.items[i].id`.
-
+      ndata.push(id);
     }
+
+     let snotifyObj = new Notification({
+        user_id: ndata,
+        message: data.message
+      });
+      await snotifyObj.save()
+
     return res.send({
-      data: data
+      data: snotifyObj
     })
 
   } catch (err) {
