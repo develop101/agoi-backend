@@ -84,7 +84,7 @@ exports.getAllOrder = async (req, res, next) => {
       let orderObj = {
         order_id: obj.order_id,
         price_per_share: obj.price_per_share,
-        user_Id: obj.user_id,
+        user_id: obj.user_id,
         order_amount: obj.order_amount,
         order_status: obj.order_status,
         order_token: obj.order_token,
@@ -107,7 +107,7 @@ exports.getAllOrder = async (req, res, next) => {
     result1.forEach(obj => {
       let orderObj = {
         order_id: obj.order_id,
-        user_Id: obj.user_id,
+        user_id: obj.user_id,
         stocks_qty_to_be_sold: obj.stocks_qty_to_be_sold,
         total_amount: obj.total_amount,
         request_status: obj.request_status,
@@ -686,7 +686,7 @@ exports.getAllCashout = async (req, res, next) => {
     result.forEach(obj => {
       let cashoutObj = {
         id: obj._id,
-        user_Id: obj.user_id,
+        user_id: obj.user_id,
         cashout_amount: obj.cashout_amount,
         cashout_status: obj.cashout_status,
         cashout_feedback: obj.cashout_feedback
@@ -713,7 +713,7 @@ exports.getCashoutById = async (req, res, next) => {
     console.log(result);
     let obj = {
       id: result._id,
-      user_Id: result.user_id,
+      user_id: result.user_id,
       cashout_amount: result.cashout_amount,
       cashout_status: result.cashout_status,
       cashout_feedback: result.cashout_feedback
