@@ -353,6 +353,7 @@ exports.kyc = async (req, res, next) => {
         nominee_name: kyc.nominee_name,
         is_completed_profile: kyc.is_completed_profile,
         is_completed_kyc: kyc.is_completed_kyc,
+        is_kyc_approved: kyc.is_kyc_approved
       }
       allkyc.push(kyc);
     })
