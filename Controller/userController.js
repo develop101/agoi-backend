@@ -5,6 +5,10 @@ const Order = require("../Model/orderModel");
 const Notification = require("../Model/notificationModel");
 const SellStock = require("../Model/sellStocksModel");
 const Cashout = require("../Model/cashoutModel");
+
+
+// USER START
+//create
 exports.createUserByContact = async (req, res, next) => {
   try {
     console.log(req.body);
@@ -58,7 +62,7 @@ exports.createUserByContact = async (req, res, next) => {
   }
 };
 
-//get all users
+//GET all users
 exports.getAll = async (req, res, next) => {
   try {
     let result = await User.find();
@@ -73,6 +77,233 @@ exports.getAll = async (req, res, next) => {
     });
   }
 };
+
+//GET users byId
+exports.findById = async (req, res, next) => {
+  try {
+    let result = await User.findById(req.params.id)//.populate('stock');  //cash out, notification
+    res.send({
+      message: "User succefully fetched",
+      data: result,
+    });
+  } catch (err) {
+    console.log(err);
+    res.send({
+      message: err.message,
+    });
+  }
+};
+
+//Edit Wallet Amount 
+exports.EditWalletAmount = async (req, res, next) => {
+  try {
+    let data = req.body;
+    let id = req.params.id;
+
+    const result = await User.findById(id);
+
+    if (!result) {
+      return res.send({ error: true, message: "user not found" });
+    }
+
+    result.wallet_balance = data.wallet_balance ? data.wallet_balance : result.wallet_balance;
+
+    await result.save();
+    res.send({
+      message: "walllet balance",
+      data: result,
+    });
+  } catch (err) {
+    res.send({
+      message: err.message,
+    })
+  }
+}
+
+// GET user by Contact number
+exports.findUserByContact = async (req, res, next) => {
+  try {
+    console.log(req.body);
+    let data = req.body;
+    if (data.mobile_number === undefined) {
+      res.send({
+        message: "please enter your phone",
+      });
+    }
+
+    const result = await User.findOne({
+      mobile_number: data.mobile_number,
+    });
+    console.log(result);
+    res.send({
+      message: "user found",
+      data: result,
+    });
+  } catch (err) {
+    res.send({
+      message: err.message,
+    });
+  }
+};
+
+// ADD profile details
+exports.completeProfileDetails = async (req, res, next) => {
+  try {
+    console.log(req.body);
+    let data = req.body;
+
+    const result = await User.findOne({
+      mobile_number: data.mobile_number,
+    });
+
+    if (!result) {
+      return res.send({ error: true, message: "user not found" });
+    }
+    result.gender = data.gender ? data.gender : result.gender;
+    result.dob = data.dob ? data.dob : result.dob;
+    result.city = data.city ? data.city : result.city;
+    result.designation = data.designation
+      ? data.designation
+      : result.designation;
+    result.company_name = data.company_name
+      ? data.company_name
+      : result.company_name;
+    result.income_range = data.income_range
+      ? data.income_range
+      : result.income_range;
+    result.name = data.name ? data.name : result.name;
+    result.is_completed_profile = data.is_completed_profile
+      ? data.is_completed_profile
+      : result.is_completed_profile;
+
+    await result.save();
+    res.send({
+      message: "user found",
+      data: result,
+    });
+  } catch (err) {
+    console.log(err);
+    res.send({
+      message: err.message,
+    });
+  }
+};
+
+//DELETE
+exports.deleteUserById = async (req, res, next) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.status(200).json("User has been deleted...");
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+// Edit
+exports.editUserById1 = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const data = req.body;
+    const userData = await User.findById(id);
+
+    if (!userDate) {
+      return res.send({ message: "user not found" });
+    }
+
+    userData.name = data.name ? data.name : userData.name;
+    userData.email_id = data.email_id ? data.email_id : userData.email_id;
+    userData.mobile_number = data.mobile_number ? data.mobile_number : userData.mobile_number;
+
+    //name, email, mobile & password
+
+    await userData.save();
+    res.send({
+      message: userData
+    })
+  } catch (err) {
+    res.send({
+      message: message.err,
+    })
+  }
+
+}
+
+//Edit admin details 
+exports.editUserById = async (req, res, next) => {
+  try {
+    let data = req.body;
+    console.log("edit User", data)
+    const userData = await User.findOne({
+      mobile_number: data.mobile_number,
+    });
+
+    if (!userDate) {
+      return res.send({ error: true, message: "user not found" });
+    }
+
+    userData.name = data.name ? data.name : userData.name;
+    userData.email_id = data.email_id ? data.email_id : userData.email_id;
+    // userData.mobile_number = data.mobile_number ? data.mobile_number : userData.mobile_number;
+
+    //name, email, mobile & password
+
+    await userData.save();
+    res.send({
+      message: userData
+    })
+  } catch (err) {
+    res.send({
+      message: message.err,
+    })
+  }
+
+}
+
+exports.editAdminDetails = async (req, res, next) => {
+  try {
+    console.log(req.body);
+    let data = req.body;
+
+    const result = await User.findOne({
+      mobile_number: data.mobile_number,
+    });
+    console.log(result);
+
+    if (!result) {
+      return res.send({ error: true, message: "user not found" });
+    }
+    // if (result.email_id) {
+    //   result.email_id = data.email_id ? data.email_id : result.email_id;
+    // } else {
+    //   result.email_id.value = data.email_id;
+    //   console.log('input does not exist');
+    // }
+    result.email_id = data.email_id ? data.email_id : result.email_id;
+    result.name = data.name ? data.name : result.name;
+    result.mobile_number = data.mobile_number ? data.mobile_number : result.mobile_number;
+    // userData.mobile_number = data.mobile_number ? data.mobile_number : userData.mobile_number;
+
+    // result.demat_acc_no = data.demat_acc_no
+    //   ? data.demat_acc_no
+    //   : result.demat_acc_no;
+    // result.pan_card_number = data.pan_card_number
+    //   ? data.pan_card_number
+    //   : result.pan_card_link;
+
+    await result.save();
+    res.send({
+      message: "user found",
+      data: result,
+    });
+  } catch (err) {
+    console.log(err);
+    res.send({
+      message: err.message,
+    });
+  }
+};
+
+// USER ENDS
+
 // ORDER START 
 //get all Order
 exports.getAllOrder = async (req, res, next) => {
@@ -209,72 +440,6 @@ exports.orderStatus = async (req, res, next) => {
 
 //ORDER ENDS
 
-//get users byId
-exports.findById = async (req, res, next) => {
-  try {
-    let result = await User.findById(req.params.id)//.populate('stock');  //cash out, notification
-    res.send({
-      message: "User succefully fetched",
-      data: result,
-    });
-  } catch (err) {
-    console.log(err);
-    res.send({
-      message: err.message,
-    });
-  }
-};
-
-//Edit Wallet Amount 
-exports.EditWalletAmount = async (req, res, next) => {
-  try {
-    let data = req.body;
-    let id = req.params.id;
-
-    const result = await User.findById(id);
-
-    if (!result) {
-      return res.send({ error: true, message: "user not found" });
-    }
-
-    result.wallet_balance = data.wallet_balance ? data.wallet_balance : result.wallet_balance;
-
-    await result.save();
-    res.send({
-      message: "walllet balance",
-      data: result,
-    });
-  } catch (err) {
-    res.send({
-      message: err.message,
-    })
-  }
-}
-
-exports.findUserByContact = async (req, res, next) => {
-  try {
-    console.log(req.body);
-    let data = req.body;
-    if (data.mobile_number === undefined) {
-      res.send({
-        message: "please enter your phone",
-      });
-    }
-
-    const result = await User.findOne({
-      mobile_number: data.mobile_number,
-    });
-    console.log(result);
-    res.send({
-      message: "user found",
-      data: result,
-    });
-  } catch (err) {
-    res.send({
-      message: err.message,
-    });
-  }
-};
 
 exports.addKYCDetails = async (req, res, next) => {
   try {
@@ -431,160 +596,7 @@ exports.kycStatus = async (req, res, next) => {
   }
 }
 
-exports.completeProfileDetails = async (req, res, next) => {
-  try {
-    console.log(req.body);
-    let data = req.body;
 
-    const result = await User.findOne({
-      mobile_number: data.mobile_number,
-    });
-
-    if (!result) {
-      return res.send({ error: true, message: "user not found" });
-    }
-    result.gender = data.gender ? data.gender : result.gender;
-    result.dob = data.dob ? data.dob : result.dob;
-    result.city = data.city ? data.city : result.city;
-    result.designation = data.designation
-      ? data.designation
-      : result.designation;
-    result.company_name = data.company_name
-      ? data.company_name
-      : result.company_name;
-    result.income_range = data.income_range
-      ? data.income_range
-      : result.income_range;
-    result.name = data.name ? data.name : result.name;
-    result.is_completed_profile = data.is_completed_profile
-      ? data.is_completed_profile
-      : result.is_completed_profile;
-
-    await result.save();
-    res.send({
-      message: "user found",
-      data: result,
-    });
-  } catch (err) {
-    console.log(err);
-    res.send({
-      message: err.message,
-    });
-  }
-};
-
-//DELETE
-exports.deleteUserById = async (req, res, next) => {
-  try {
-    await User.findByIdAndDelete(req.params.id);
-    res.status(200).json("User has been deleted...");
-  } catch (err) {
-    res.status(500).json(err);
-  }
-};
-
-exports.editUserById1 = async (req, res, next) => {
-  try {
-    const id = req.params.id;
-    const data = req.body;
-    const userData = await User.findById(id);
-
-    if (!userDate) {
-      return res.send({ message: "user not found" });
-    }
-
-    userData.name = data.name ? data.name : userData.name;
-    userData.email_id = data.email_id ? data.email_id : userData.email_id;
-    userData.mobile_number = data.mobile_number ? data.mobile_number : userData.mobile_number;
-
-    //name, email, mobile & password
-
-    await userData.save();
-    res.send({
-      message: userData
-    })
-  } catch (err) {
-    res.send({
-      message: message.err,
-    })
-  }
-
-}
-
-//Edit admin details 
-exports.editUserById = async (req, res, next) => {
-  try {
-    let data = req.body;
-    console.log("edit User", data)
-    const userData = await User.findOne({
-      mobile_number: data.mobile_number,
-    });
-
-    if (!userDate) {
-      return res.send({ error: true, message: "user not found" });
-    }
-
-    userData.name = data.name ? data.name : userData.name;
-    userData.email_id = data.email_id ? data.email_id : userData.email_id;
-    // userData.mobile_number = data.mobile_number ? data.mobile_number : userData.mobile_number;
-
-    //name, email, mobile & password
-
-    await userData.save();
-    res.send({
-      message: userData
-    })
-  } catch (err) {
-    res.send({
-      message: message.err,
-    })
-  }
-
-}
-
-exports.editAdminDetails = async (req, res, next) => {
-  try {
-    console.log(req.body);
-    let data = req.body;
-
-    const result = await User.findOne({
-      mobile_number: data.mobile_number,
-    });
-    console.log(result);
-
-    if (!result) {
-      return res.send({ error: true, message: "user not found" });
-    }
-    // if (result.email_id) {
-    //   result.email_id = data.email_id ? data.email_id : result.email_id;
-    // } else {
-    //   result.email_id.value = data.email_id;
-    //   console.log('input does not exist');
-    // }
-    result.email_id = data.email_id ? data.email_id : result.email_id;
-    result.name = data.name ? data.name : result.name;
-    result.mobile_number = data.mobile_number ? data.mobile_number : result.mobile_number;
-    // userData.mobile_number = data.mobile_number ? data.mobile_number : userData.mobile_number;
-
-    // result.demat_acc_no = data.demat_acc_no
-    //   ? data.demat_acc_no
-    //   : result.demat_acc_no;
-    // result.pan_card_number = data.pan_card_number
-    //   ? data.pan_card_number
-    //   : result.pan_card_link;
-
-    await result.save();
-    res.send({
-      message: "user found",
-      data: result,
-    });
-  } catch (err) {
-    console.log(err);
-    res.send({
-      message: err.message,
-    });
-  }
-};
 
 exports.storeNotification = async (req, res, next) => {
   try {
@@ -599,11 +611,11 @@ exports.storeNotification = async (req, res, next) => {
       ndata.push(id);
     }
 
-     let snotifyObj = new Notification({
-        user_id: ndata,
-        message: data.message
-      });
-      await snotifyObj.save()
+    let snotifyObj = new Notification({
+      user_id: ndata,
+      message: data.message
+    });
+    await snotifyObj.save()
 
     return res.send({
       data: snotifyObj
