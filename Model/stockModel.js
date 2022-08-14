@@ -42,6 +42,15 @@ let stockSchema = new mongoose.Schema(
         }
       },
     },
+    bought_price: {
+      type: mongoose.Schema.Types.Number,
+    },
+    current_price: {
+      type: mongoose.Schema.Types.Number,
+    },
+    growth_percentage: {
+      type: mongoose.Schema.Types.Number,
+    },
     stock_previous_price: {
       type: mongoose.Schema.Types.Number,
     },

@@ -38,6 +38,8 @@ router.post('/create', upload.single("image"), async (req, res) => {
       companyType: req.body.companyType,
       face_value: req.body.face_value,
       price_per_lot: req.body.price_per_lot,
+      bought_price: req.body.price_per_lot, // storing the bought price
+      current_price: req.body.price_per_lot, // storing the current price at that time
       share_per_lot: req.body.share_per_lot,
       discription: req.body.discription,
       stock_status: req.body.stock_status,
@@ -136,6 +138,8 @@ router.post('/profile/edit/:id', async (req, res, next) => {
     stockData.companytype = data.companytype ? data.companytype : stockData.companytype;
     stockData.face_value = data.face_value ? data.face_value : stockData.face_value;
     stockData.price_per_lot = data.price_per_lot ? data.price_per_lot : stockData.price_per_lot;
+    stockData.current_price = data.price_per_lot ? data.price_per_lot : stockData.price_per_lot;
+    stockData.growth_percentage = (( stockData.current_price - stockData.bought_price)/ stockData.bought_price )*100;
     stockData.share_per_lot = data.share_per_lot ? data.share_per_lot : stockData.share_per_lot;
     stockData.discription = data.discription ? data.discription : stockData.discription;
     stockData.stock_status = data.stock_status ? data.stock_status : stockData.stock_status;
