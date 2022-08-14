@@ -50,6 +50,7 @@ let stockSchema = new mongoose.Schema(
     },
     growth_percentage: {
       type: mongoose.Schema.Types.Number,
+      default: 0,
     },
     stock_previous_price: {
       type: mongoose.Schema.Types.Number,
