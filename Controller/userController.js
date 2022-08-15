@@ -38,6 +38,7 @@ exports.createUserByContact = async (req, res, next) => {
       if (isValidReferred) {
         userData["referred_code"] = data.referred_code;
         userData["isReferred"] = true;
+        userData.referred_userDetails = isValidReferred._id;
       }
     }
     const result = await User.create(userData);
@@ -65,7 +66,7 @@ exports.createUserByContact = async (req, res, next) => {
 //GET all users
 exports.getAll = async (req, res, next) => {
   try {
-    let result = await User.find();
+    let result = await User.find().populate('referred_userDetails');
     res.send({
       message: "List of All User",
       data: result,
@@ -81,7 +82,7 @@ exports.getAll = async (req, res, next) => {
 //GET users byId
 exports.findById = async (req, res, next) => {
   try {
-    let result = await User.findById(req.params.id)//.populate('stock');  //cash out, notification
+    let result = await User.findById(req.params.id).populate('referred_userDetails')//.populate('stock');  //cash out, notification
     res.send({
       message: "User succefully fetched",
       data: result,

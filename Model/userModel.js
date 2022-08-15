@@ -117,6 +117,10 @@ const userSchema = new mongoose.Schema(
       minlength: 6,
       maxlength: 6,
     },
+    referred_userDetails: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"User"
+    },
     referral_code: {
       type: mongoose.Schema.Types.String,
       minlength: 6,
