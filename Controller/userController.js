@@ -84,7 +84,7 @@ exports.getAll = async (req, res, next) => {
 //GET users byId
 exports.findById = async (req, res, next) => {
   try {
-    let result = await User.findById(req.params.id).populate('referred_userDetails')//.populate('stock');  //cash out, notification
+    let result = await User.findById(req.params.id).populate('referred_userDetails cashout')//.populate('stock');  //cash out, notification
     res.send({
       message: "User succefully fetched",
       data: result,
