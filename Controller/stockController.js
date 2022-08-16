@@ -118,11 +118,17 @@ exports.getAllStocks = async (req, res, next) => {
 exports.findall = async (req, res, next) => {
   try {
     let result = await Stock.find()
-    .sort({ updatedAt: -1 });                  // sort in descending order
-   // .then(records => res.json(records))     // format response as json
+    .sort({ updatedAt: -1 });
+    let total = await Stock.countDocuments();
+    let available = await Stock.countDocuments({ stock_status: "Available" });
+    let soldout = await Stock.countDocuments({ stock_status: "Sold Out" });
+   
     res.send({
       message: "List of All share",
       data: result,
+      totalShare: total,
+      availableShare: available,
+      soldoutShare: soldout
     });
   } catch (err) {
     console.log(err);
