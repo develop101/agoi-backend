@@ -138,6 +138,27 @@ exports.findall = async (req, res, next) => {
   }
 };
 
+// search
+exports.search = async (req, res, next) => {
+  try {
+    let result = await Stock.find({
+      "$or":[
+        {"stock_name":{$regex:req.params.key}}
+      ]
+    })
+   
+    res.send({
+      message: "List of All share",
+      data: result,
+    });
+  } catch (err) {
+    console.log(err);
+    res.send({
+      message: err.message,
+    });
+  }
+};
+
 //findById
 exports.findById = async (req, res, next) => {
   try {
