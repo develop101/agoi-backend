@@ -134,7 +134,7 @@ const userSchema = new mongoose.Schema(
     }],
     notification: [{
       type: mongoose.Schema.Types.ObjectId,
-      ref: "notification",
+      ref: "Notification",
     }],
     cashout: [{
       type: mongoose.Schema.Types.ObjectId,

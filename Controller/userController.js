@@ -67,7 +67,7 @@ exports.createUserByContact = async (req, res, next) => {
 exports.getAll = async (req, res, next) => {
   try {
    
-    let result = await User.find().populate('referred_userDetails cashout');
+    let result = await User.find().populate('referred_userDetails cashout notification');
    
     res.send({
       message: "List of All User",
@@ -84,7 +84,7 @@ exports.getAll = async (req, res, next) => {
 //GET users byId
 exports.findById = async (req, res, next) => {
   try {
-    let result = await User.findById(req.params.id).populate('referred_userDetails cashout')//.populate('stock');  //cash out, notification
+    let result = await User.findById(req.params.id).populate('referred_userDetails cashout notification')//.populate('stock');  //cash out, notification
     res.send({
       message: "User succefully fetched",
       data: result,
@@ -619,6 +619,20 @@ exports.storeNotification = async (req, res, next) => {
       message: data.message
     });
     await snotifyObj.save()
+
+    for (let i = 0, l = ndata.length; i < l; i++){
+      console.log(i)
+      var id = ndata[i];
+      console.log("ids", id);
+
+      let eUser = await User.findByIdAndUpdate(
+        id,
+        {
+          $push: { notification: snotifyObj._id }
+        },
+        { new: true, userFindAndModify: false },
+      );
+    }
 
     return res.send({
       data: snotifyObj
