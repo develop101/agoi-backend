@@ -1,6 +1,6 @@
 const express = require("express");
 const { generateOrder, returnOrderUrl, getOrderFromBackend: getOrder, getOrderFromCashFree, generatePayment, getUserOrders, availableOrder } = require("../Controller/OrdersController");
-const { createUserByContact, findUserByContact, addKYCDetails, completeProfileDetails, findall, findById, deleteUserById , EditWalletAmount, getKYCDetails, getallKYCDetails, editUserById, getAll, editAdminDetails, getAllOrder, getOrderById, kyc, kycStatus, orderStatus, storeNotification, getAllNotification, getAllSellOrder, getAllPurchaseOrder, createCashout, getAllCashout, getCashoutById, cashoutStatus} = require("../Controller/userController");
+const { createUserByContact, findUserByContact, addKYCDetails, completeProfileDetails, findall, findById, deleteUserById , EditWalletAmount, getKYCDetails, getallKYCDetails, editUserById, getAll, editAdminDetails, getAllOrder, getOrderById, kyc, kycStatus, orderStatus, storeNotification, getAllNotification, getAllSellOrder, getAllPurchaseOrder, getAllCashout, getCashoutById, cashoutStatus, updateUserwithCashout} = require("../Controller/userController");
 const router = express.Router();
 
 
@@ -30,7 +30,7 @@ router.route("/kyc/:id").post(kycStatus);
 router.route("/editadmin").post(editAdminDetails);
 router.route("/notify").post(storeNotification);
 router.get("/notify/all", getAllNotification);
-router.post("/cashout", createCashout);
+router.post("/cashout", updateUserwithCashout);
 router.get("/cashout/all", getAllCashout);
 router.get("/cashout/:id", getCashoutById);
 router.post("/cashout/status/:id", cashoutStatus);

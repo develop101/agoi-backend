@@ -130,11 +130,15 @@ const userSchema = new mongoose.Schema(
     },
     stock: [{
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Share",
+      ref: "Stock",
     }],
     notification: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "notification",
+    }],
+    cashout: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Cashout",
     }],
   },
   { timestamps: true }

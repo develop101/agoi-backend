@@ -66,7 +66,9 @@ exports.createUserByContact = async (req, res, next) => {
 //GET all users
 exports.getAll = async (req, res, next) => {
   try {
-    let result = await User.find().populate('referred_userDetails');
+   
+    let result = await User.find().populate('referred_userDetails cashout');
+   
     res.send({
       message: "List of All User",
       data: result,
@@ -658,29 +660,27 @@ exports.getAllNotification = async (req, res, next) => {
 // CASHOUT START
 
 //create
-exports.createCashout = async (req, res) => {
+//update user with cashout 
+exports.updateUserwithCashout = async (req, res, next) => {
   try {
-    console.log(req.body)
-    let nCashout = new Cashout({
-      user_id: req.body.user_id,
-      cashout_amount: req.body.cashout_amount,
-      cashout_status: req.body.cashout_status,
-      cashout_feedback: req.body.cashout_feedback,
-    })
-
-    let savedCashout = await Cashout.create(nCashout);
-
-    res.send({
-      message: "cashout successfully created",
-      data: savedCashout,
-    });
+      const nCashout = req.body;
+      const { user_id } = req.body;
+      const ncashout = await Cashout.create(nCashout)
+      const newBlog = await User.findByIdAndUpdate(
+          user_id,
+          {
+            $push: { cashout: ncashout._id } 
+          },
+          { new: true, useFindAndModify: false },
+      );
+      res.send({
+        message: "cashout successfully created",
+        data: ncashout,
+      });
   } catch (err) {
-    res.send({
-      message: err.message,
-    });
+      next(err)
   }
-};
-
+}
 
 //get all cahout
 exports.getAllCashout = async (req, res, next) => {
