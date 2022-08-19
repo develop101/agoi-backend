@@ -117,11 +117,31 @@ exports.getAllStocks = async (req, res, next) => {
 //get all
 exports.findall = async (req, res, next) => {
   try {
+    let page = parseInt(req.query.page);
+    let limit = parseInt(req.query.limit) || 5;
+
+    let total = await Stock.countDocuments();
+    let soldout = await Stock.countDocuments({ stock_status: "Sold Out" });
+    let available = await Stock.countDocuments({ stock_status: "Available" });
+ 
+    if(page && limit){
+      let result = await Stock.find()
+      .skip((page - 1) * limit)
+      .limit(limit);
+      
+     return res.send({
+        message: "List of All share ",
+        data: result,
+        page: page,
+        limit: limit,
+        totalShare: total,
+        availableShare: available,
+        soldoutShare: soldout
+      });
+    };
+
     let result = await Stock.find()
     .sort({ updatedAt: -1 });
-    let total = await Stock.countDocuments();
-    let available = await Stock.countDocuments({ stock_status: "Available" });
-    let soldout = await Stock.countDocuments({ stock_status: "Sold Out" });
    
     res.send({
       message: "List of All share",

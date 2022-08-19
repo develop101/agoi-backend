@@ -19,7 +19,7 @@ Content-Type: application/json
 
 
 ### Find All Stock
-GET  http://localhost:3002/api/v1/stock/findAll/
+GET  http://localhost:3002/api/v1/stock/findAll?page=1&limit=2
 Content-Type: application/json
 
 
