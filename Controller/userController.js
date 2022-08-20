@@ -66,12 +66,21 @@ exports.createUserByContact = async (req, res, next) => {
 //GET all users
 exports.getAll = async (req, res, next) => {
   try {
-   
-    let result = await User.find().populate('referred_userDetails cashout notification');
-   
+
+    let page = parseInt(req.query.page) || 1;
+    let limit = parseInt(req.query.limit) || 10;
+    let total = await User.countDocuments();
+
+    let result = await User.find().populate('referred_userDetails cashout notification')
+      .skip((page - 1) * limit)
+      .limit(limit);
+
     res.send({
       message: "List of All User",
       data: result,
+      page: page,
+      limit: limit,
+      total:total
     });
   } catch (err) {
     console.log(err);
@@ -620,7 +629,7 @@ exports.storeNotification = async (req, res, next) => {
     });
     await snotifyObj.save()
 
-    for (let i = 0, l = ndata.length; i < l; i++){
+    for (let i = 0, l = ndata.length; i < l; i++) {
       console.log(i)
       var id = ndata[i];
       console.log("ids", id);
@@ -677,22 +686,22 @@ exports.getAllNotification = async (req, res, next) => {
 //update user with cashout 
 exports.updateUserwithCashout = async (req, res, next) => {
   try {
-      const nCashout = req.body;
-      const { user_id } = req.body;
-      const ncashout = await Cashout.create(nCashout)
-      const newBlog = await User.findByIdAndUpdate(
-          user_id,
-          {
-            $push: { cashout: ncashout._id } 
-          },
-          { new: true, useFindAndModify: false },
-      );
-      res.send({
-        message: "cashout successfully created",
-        data: ncashout,
-      });
+    const nCashout = req.body;
+    const { user_id } = req.body;
+    const ncashout = await Cashout.create(nCashout)
+    const newBlog = await User.findByIdAndUpdate(
+      user_id,
+      {
+        $push: { cashout: ncashout._id }
+      },
+      { new: true, useFindAndModify: false },
+    );
+    res.send({
+      message: "cashout successfully created",
+      data: ncashout,
+    });
   } catch (err) {
-      next(err)
+    next(err)
   }
 }
 
