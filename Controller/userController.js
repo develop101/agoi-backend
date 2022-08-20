@@ -69,9 +69,11 @@ exports.getAll = async (req, res, next) => {
 
     let page = parseInt(req.query.page) || 1;
     let limit = parseInt(req.query.limit) || 10;
+    const search = req.query.term || "";
     let total = await User.countDocuments();
 
-    let result = await User.find().populate('referred_userDetails cashout notification')
+    let result = await User.find({name: {$regex: search, $options: "i"}})
+      .populate('referred_userDetails cashout notification')
       .skip((page - 1) * limit)
       .limit(limit);
 
@@ -322,8 +324,9 @@ exports.getAllOrder = async (req, res, next) => {
   try {
     let page = parseInt(req.query.page) || 1;
     let limit = parseInt(req.query.limit) || 10;
+    const search = req.query.term || "";
 
-    let result = await Order.find().populate('user_id');
+    let result = await Order.find({order_note: {$regex: search, $options: "i"}}).populate('user_id');
     let orderArry = []
 
     result.forEach(obj => {
@@ -347,7 +350,7 @@ exports.getAllOrder = async (req, res, next) => {
       orderArry.push(orderObj)
     })
 
-    let result1 = await SellStock.find().populate('user_id');
+    let result1 = await SellStock.find({}).populate('user_id');
 
     let orderArry1 = []
 
@@ -400,10 +403,19 @@ exports.getAllOrder = async (req, res, next) => {
 //get all Order
 exports.getAllPurchaseOrder = async (req, res, next) => {
   try {
-    let result = await Order.find().populate('user_id');
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit) || 5;
+    const search = req.query.term || "";
+
+    let result = await Order.find({order_note: {$regex: search, $options: "i"}})
+      .populate('user_id')
+      .skip((page - 1) * limit)
+      .limit(limit);
     res.send({
       message: "List of All Purchase Order",
       data: result,
+      page:page,
+      limit: limit
     });
   } catch (err) {
     console.log(err);
@@ -416,10 +428,19 @@ exports.getAllPurchaseOrder = async (req, res, next) => {
 //get all sell order
 exports.getAllSellOrder = async (req, res, next) => {
   try {
-    let result = await SellStock.find().populate('user_id');
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit) || 5;
+    const search = req.query.term || "";
+
+    let result = await SellStock.find({order_note: {$regex: search, $options: "i"}})
+      .populate('user_id')
+      .skip((page - 1) * limit)
+      .limit(limit);
     res.send({
-      message: "List of All sell Order",
+      message: "List of All Sell Order",
       data: result,
+      page:page,
+      limit: limit
     });
   } catch (err) {
     console.log(err);
@@ -434,7 +455,7 @@ exports.getOrderById = async (req, res, next) => {
   try {
     let result = await Order.findById(req.params.id).populate('user_id stock_id');
     res.send({
-      message: "List of All Order",
+      message: "Order successfully fetched",
       data: result,
     });
   } catch (err) {
@@ -681,7 +702,15 @@ exports.storeNotification = async (req, res, next) => {
 //get all Notifications
 exports.getAllNotification = async (req, res, next) => {
   try {
-    let result = await Notification.find().populate('user_id');
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit) || 10;
+    const search = req.query.term || "";
+
+    let result = await Notification.find({message: {$regex: search, $options: "i"}})
+    .populate('user_id')
+    .skip((page - 1) * limit)
+    .limit(limit);
+    
     let data = [];
 
     result.forEach(obj => {
@@ -731,7 +760,15 @@ exports.updateUserwithCashout = async (req, res, next) => {
 //get all cahout
 exports.getAllCashout = async (req, res, next) => {
   try {
-    let result = await Cashout.find().populate('user_id');
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit) || 10;
+    const search = req.query.term || "";
+
+    let result = await Cashout.find({cashout_feedback: {$regex: search, $options: "i"}})
+    .populate('user_id')
+    .skip((page - 1) * limit)
+    .limit(limit);
+    
     let data = [];
 
     result.forEach(obj => {

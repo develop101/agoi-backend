@@ -53,13 +53,15 @@ exports.editStock = async (req, res, next) => {
 //get available stock
 exports.availableStock = async (req, res, next) => {
   try {
-    let page = parseInt(req.query.page);
-    let limit = parseInt(req.query.limit) || 5;
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit) || 10;
+    const search = req.query.term || "";
 
     let available = await Stock.countDocuments({ stock_status: "Available" });
  
     if(page && limit){
-      let result = await Stock.find({ stock_status: "Available" })
+      let result = await Stock.find({stock_name: {$regex:search, $options: "i"}})
+      .where({ stock_status: "Available" })
       .skip((page - 1) * limit)
       .limit(limit);
       
@@ -71,7 +73,8 @@ exports.availableStock = async (req, res, next) => {
         availableShare: available,
       });
     };
-    let result = await Stock.find({ stock_status: "Available" });
+    let result = await Stock.find({stock_name:{$regex:search, $options: "i"}})
+    .where({ stock_status: "Available" })//,{"$or":[{"stock_name":{$regex:req.query.term}}]}); //{"$or":[{"stock_name":{$regex:req.params.key}}]}
     res.send({
       message: "list of available stock",
       data: result,
@@ -90,8 +93,10 @@ exports.soldStock = async (req, res, next) => {
     let page = parseInt(req.query.page) || 1;
     let limit = parseInt(req.query.limit) || 10;
     let total = await Stock.countDocuments();
+    const search = req.query.term || "";
 
-    let result = await Stock.find({ stock_status: "Sold Out" })
+    let result = await Stock.find({ stock_name:{$regex:search, $options: "i"} })
+      .where({ stock_status: "Sold Out" })
       .skip((page - 1) * limit)
       .limit(limit);
     
@@ -147,13 +152,14 @@ exports.findall = async (req, res, next) => {
   try {
     let page = parseInt(req.query.page);
     let limit = parseInt(req.query.limit) || 5;
+    const search = req.query.term || "";
 
     let total = await Stock.countDocuments();
     let soldout = await Stock.countDocuments({ stock_status: "Sold Out" });
     let available = await Stock.countDocuments({ stock_status: "Available" });
  
     if(page && limit){
-      let result = await Stock.find()
+      let result = await Stock.find({stock_name:{$regex: search, $options: "i"}})
       .skip((page - 1) * limit)
       .limit(limit);
       
