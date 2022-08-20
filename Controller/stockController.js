@@ -53,9 +53,27 @@ exports.editStock = async (req, res, next) => {
 //get available stock
 exports.availableStock = async (req, res, next) => {
   try {
+    let page = parseInt(req.query.page);
+    let limit = parseInt(req.query.limit) || 5;
+
+    let available = await Stock.countDocuments({ stock_status: "Available" });
+ 
+    if(page && limit){
+      let result = await Stock.find({ stock_status: "Available" })
+      .skip((page - 1) * limit)
+      .limit(limit);
+      
+     return res.send({
+        message: "list of available stock",
+        data: result,
+        page: page,
+        limit: limit,
+        availableShare: available,
+      });
+    };
     let result = await Stock.find({ stock_status: "Available" });
     res.send({
-      message: "stock created successfully",
+      message: "list of available stock",
       data: result,
     });
   } catch (err) {
