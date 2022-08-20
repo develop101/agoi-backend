@@ -87,10 +87,20 @@ exports.availableStock = async (req, res, next) => {
 //get sold out stock
 exports.soldStock = async (req, res, next) => {
   try {
-    let result = await Stock.find({ stock_status: "Sold Out" });
+    let page = parseInt(req.query.page) || 1;
+    let limit = parseInt(req.query.limit) || 10;
+    let total = await Stock.countDocuments();
+
+    let result = await Stock.find({ stock_status: "Sold Out" })
+      .skip((page - 1) * limit)
+      .limit(limit);
+    
     res.send({
-      message: "stock created successfully",
+      message: "list of all Sold Out stocks",
       data: result,
+      page: page,
+      limit: limit,
+      total:total
     });
   } catch (err) {
     res.send({

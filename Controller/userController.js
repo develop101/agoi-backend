@@ -320,6 +320,9 @@ exports.editAdminDetails = async (req, res, next) => {
 //get all Order
 exports.getAllOrder = async (req, res, next) => {
   try {
+    let page = parseInt(req.query.page) || 1;
+    let limit = parseInt(req.query.limit) || 10;
+
     let result = await Order.find().populate('user_id');
     let orderArry = []
 
@@ -362,10 +365,30 @@ exports.getAllOrder = async (req, res, next) => {
     })
 
     let merged = orderArry.concat(orderArry1);
-    res.send({
-      message: "List of All Order",
-      data: merged,
-    });
+
+    function paginator(items, current_page, per_page_items) {
+      let page = current_page || 1,
+      per_page = per_page_items || 10,
+      offset = (page - 1) * per_page,
+    
+      paginatedItems = items.slice(offset).slice(0, per_page_items),
+      total_pages = Math.ceil(items.length / per_page);
+    
+      return res.send({
+        message: "List of All Order",
+        data: paginatedItems,
+        page: page,
+        limit: limit,
+        total: items.length,
+        //per_page: per_page,
+        // pre_page: page - 1 ? page - 1 : null,
+        //next_page: (total_pages > page) ? page + 1 : null,
+        //total_pages: total_pages,
+      });
+    }
+
+   paginator(merged, page, limit);
+
   } catch (err) {
     console.log(err);
     res.send({
