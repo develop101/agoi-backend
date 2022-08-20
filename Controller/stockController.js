@@ -152,7 +152,7 @@ exports.findall = async (req, res, next) => {
         data: result,
         page: page,
         limit: limit,
-        totalShare: total,
+        total: total,
         availableShare: available,
         soldoutShare: soldout
       });
