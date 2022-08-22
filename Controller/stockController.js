@@ -2,21 +2,21 @@ const { doc } = require("../Config/db");
 const db = require("../Config/db");
 const Stock = require("../Model/stockModel");
 
-// //create a stock --admin
-// exports.createStock = async (req, res, next) => {
-//   try {
-//     let data = req.body;
-//     let result = await Stock.create(data);
-//     res.send({
-//       message: "stock created successfully",
-//       data: result,
-//     });
-//   } catch (err) {
-//     res.send({
-//       message: err.message,
-//     });
-//   }
-// };
+//create a stock --admin
+exports.createStock = async (req, res, next) => {
+  try {
+    let data = req.body;
+    let result = await Stock.create(data);
+    res.send({
+      message: "stock created successfully",
+      data: result,
+    });
+  } catch (err) {
+    res.send({
+      message: err.message,
+    });
+  }
+};
 
 exports.editStock = async (req, res, next) => {
   try {
