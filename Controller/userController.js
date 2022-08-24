@@ -764,7 +764,7 @@ exports.getAllCashout = async (req, res, next) => {
     const limit = parseInt(req.query.limit) || 10;
     const search = req.query.term || "";
 
-    let result = await Cashout.find({cashout_feedback: {$regex: search, $options: "i"}})
+    let result = await Cashout.find() //{cashout_amount: {$regex: search, $options: "i"}}
     .populate('user_id')
     .skip((page - 1) * limit)
     .limit(limit);
@@ -833,6 +833,27 @@ exports.cashoutStatus = async (req, res, next) => {
     cashoutData.cashout_feedback = data.cashout_feedback ? data.cashout_feedback : cashoutData.cashout_feedback;
 
     await cashoutData.save()
+
+
+    //genrate notification 
+    if(!cashoutData.cashout_status){
+      console.log("cashout notification false");
+      let snotifyObj = new Notification({
+        user_id: cashoutData._id,
+        message: cashoutData.cashout_feedback
+      });
+      await snotifyObj.save()
+
+      let eUser = await User.findByIdAndUpdate(
+        cashoutData.user_id,
+        {
+          $push: { notification: snotifyObj._id }
+        },
+        { new: true, userFindAndModify: false },
+      );
+      console.log("notification sent");
+
+    }
 
     return res.send({
       message: "order status updated successfully",
