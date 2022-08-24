@@ -640,6 +640,24 @@ exports.kycStatus = async (req, res, next) => {
     kycData.kyc_feedback = data.kyc_feedback ? data.kyc_feedback : kycData.kyc_feedback;
 
     await kycData.save()
+     //genrate notification 
+     if(!kycData.is_kyc_approved){
+      let snotifyObj = new Notification({
+        user_id: kycData._id,
+        message: kycData.kyc_feedback
+      });
+      await snotifyObj.save()
+
+      let eUser = await User.findByIdAndUpdate(
+        kycData.user_id,
+        {
+          $push: { notification: snotifyObj._id }
+        },
+        { new: true, userFindAndModify: false },
+      );
+      console.log("notification sent");
+
+    }
 
     return res.send({
       message: "kyc status updated",
