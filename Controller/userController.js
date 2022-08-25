@@ -3,6 +3,7 @@ const User = require("../Model/userModel");
 const crypto = require("crypto");
 const Order = require("../Model/orderModel");
 const Notification = require("../Model/notificationModel");
+const AdminNotification = require("../Model/adminNotificationModel");
 const SellStock = require("../Model/sellStocksModel");
 const Cashout = require("../Model/cashoutModel");
 
@@ -541,6 +542,15 @@ exports.addKYCDetails = async (req, res, next) => {
       ? data.is_completed_kyc
       : result.is_completed_kyc;
     await result.save();
+    // store notification for admin panel started 
+    
+    let SnoticationObj = new AdminNotification({
+      user_id: result._id,
+      message: "New Kyc submited"
+    })
+    await SnoticationObj.save();
+
+    //ends
     res.send({
       message: "user found",
       data: result,
@@ -713,6 +723,27 @@ exports.storeNotification = async (req, res, next) => {
     console.log(err);
     res.send({
       message: err.message,
+    });
+  }
+}
+//get all admin notification
+exports.getAllAdminNotification = async (req, res, next) => {
+  try{
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit) || 10;
+    const total = await AdminNotification.countDocuments();
+    const data = await AdminNotification.find().skip((page -1)* limit).limit(limit);
+
+  res.send({
+    message: "successfully fetched Admin notifications",
+    data: data,
+    page: page,
+    limit: limit,
+    total: total
+  })
+  }catch(err){
+    res.send({
+      message: err.message
     });
   }
 }
