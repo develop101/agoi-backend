@@ -44,8 +44,10 @@ const orderSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.Number,
     },
     is_order_approved: {
-      type: mongoose.Schema.Types.Boolean,
-      default: false,
+      type: mongoose.Schema.Types.String,
+      trim: true,
+      enum: ["Approve", "Reject", "Pending"],
+      default: "Pending"
     },
     order_feedback: {
       type: mongoose.Schema.Types.String,

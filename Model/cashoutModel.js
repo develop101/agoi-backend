@@ -10,8 +10,10 @@ const cashoutSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.Number,
     },
     cashout_status: {
-      type: mongoose.Schema.Types.Boolean,
-      default: false,
+      type: mongoose.Schema.Types.String,
+      trim: true,
+      enum: ["Approve", "Reject", "Pending"],
+      default: "Pending"
     },
     cashout_feedback: {
       type: mongoose.Schema.Types.String,
