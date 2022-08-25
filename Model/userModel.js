@@ -87,8 +87,10 @@ const userSchema = new mongoose.Schema(
       default: false,
     },
     is_kyc_approved: {
-      type: mongoose.Schema.Types.Boolean,
-      default: false,
+      type: mongoose.Schema.Types.String,
+      trim: true,
+      enum: ["Approve", "Reject", "Pending"],
+      default: "Pending"
     },
     kyc_feedback: {
       type: mongoose.Schema.Types.String,
