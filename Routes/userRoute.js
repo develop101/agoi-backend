@@ -1,6 +1,6 @@
 const express = require("express");
 const { generateOrder, returnOrderUrl, getOrderFromBackend: getOrder, getOrderFromCashFree, generatePayment, getUserOrders, availableOrder } = require("../Controller/OrdersController");
-const { createUserByContact, findUserByContact, addKYCDetails, completeProfileDetails, findall, findById, deleteUserById , EditWalletAmount, getKYCDetails, getallKYCDetails, editUserById, getAll, editAdminDetails, getAllOrder, getOrderById, kyc, kycStatus, orderStatus, storeNotification, getAllNotification, getAllSellOrder, getAllPurchaseOrder, getAllCashout, getCashoutById, cashoutStatus, updateUserwithCashout, getAllAdminNotification, getAllUserNotification} = require("../Controller/userController");
+const { createUserByContact, findUserByContact, addKYCDetails, completeProfileDetails, findall, findById, deleteUserById , EditWalletAmount, getKYCDetails, getallKYCDetails, editUserById, getAll, editAdminDetails, getAllOrder, getOrderById, kyc, kycStatus, orderStatus, storeNotification, getAllNotification, getAllSellOrder, getAllPurchaseOrder, getAllCashout, getCashoutById, cashoutStatus, updateUserwithCashout, getAllAdminNotification, getAllUserNotification, userNotificationStatus} = require("../Controller/userController");
 const router = express.Router();
 
 
@@ -30,6 +30,7 @@ router.route("/kyc/:id").post(kycStatus);
 router.route("/editadmin").post(editAdminDetails);
 router.route("/notify").post(storeNotification);
 router.route("/user-notification/:id").get(getAllUserNotification);
+router.route("/user-notification/:id").post(userNotificationStatus);
 router.get("/notify/all", getAllNotification);
 router.get("/admin-notification/all", getAllAdminNotification);
 router.post("/cashout", updateUserwithCashout);

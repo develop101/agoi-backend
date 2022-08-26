@@ -744,7 +744,6 @@ exports.storeNotification = async (req, res, next) => {
 //get all user notification
 exports.getAllUserNotification = async (req, res, next) => {
   try{
-    console.log("usernotification het")
     const id = req.params.id;
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
@@ -769,6 +768,32 @@ exports.getAllUserNotification = async (req, res, next) => {
     res.send({
       message: err.message
     });
+  }
+}
+
+// change user notification  status
+exports.userNotificationStatus = async (req, res, next) => {
+  try {
+    let id = req.params.id;
+    let data = req.body;
+
+    const Data = await UserNotification.findById(id);
+    if (!Data) {
+      return res.send({ error: true, message: "notification not found" });
+    }
+
+    Data.status = data.status;
+
+    await Data.save()
+
+    return res.send({
+      message: "notification status updated successfully",
+      data: Data
+    });
+  } catch (err) {
+    res.send({
+      message: err.message,
+    })
   }
 }
 
