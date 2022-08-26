@@ -3,6 +3,7 @@ const User = require("../Model/userModel");
 const crypto = require("crypto");
 const Order = require("../Model/orderModel");
 const Notification = require("../Model/notificationModel");
+const UserNotification = require("../Model/userNotificationModel");
 const AdminNotification = require("../Model/adminNotificationModel");
 const SellStock = require("../Model/sellStocksModel");
 const Cashout = require("../Model/cashoutModel");
@@ -714,6 +715,19 @@ exports.storeNotification = async (req, res, next) => {
         { new: true, userFindAndModify: false },
       );
     }
+    //store in userNotification
+    for (let i = 0, l = data.user_id.length; i < l; i++) {
+
+      var obj = data.user_id[i];
+      var id = obj  // user id 
+
+      let unotifyObj = new UserNotification({
+        user_id: id,
+        message: data.message
+      });
+      await unotifyObj.save()
+    }
+
 
     return res.send({
       data: snotifyObj
@@ -726,6 +740,38 @@ exports.storeNotification = async (req, res, next) => {
     });
   }
 }
+
+//get all user notification
+exports.getAllUserNotification = async (req, res, next) => {
+  try{
+    console.log("usernotification het")
+    const id = req.params.id;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const total = await UserNotification.countDocuments().where({user_id: id});;
+    const seenTotal = await UserNotification.countDocuments().where({user_id: id,status: true});
+    const unseenTotal = await UserNotification.countDocuments().where({user_id: id,status: false});
+    const data = await UserNotification.find()
+    .where({user_id: id})
+    .skip((page -1)* limit)
+    .limit(limit);
+
+  res.send({
+    message: "successfully fetched User notifications",
+    data: data,
+    page: page,
+    limit: limit,
+    total: total,
+    unseenTotal: unseenTotal,
+    seenTotal: seenTotal
+  })
+  }catch(err){
+    res.send({
+      message: err.message
+    });
+  }
+}
+
 //get all admin notification
 exports.getAllAdminNotification = async (req, res, next) => {
   try{
