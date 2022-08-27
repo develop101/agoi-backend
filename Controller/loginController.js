@@ -19,7 +19,7 @@ exports.login = async (req, res, next) => {
           message: loginData,
         })
       }
-      return res.send({
+      return res.status(401).send({
         message: "wrong credentials",
       })
       
