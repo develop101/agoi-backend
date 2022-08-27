@@ -773,21 +773,21 @@ exports.storeNotification = async (req, res, next) => {
 exports.getAllUserNotification = async (req, res, next) => {
   try{
     const id = req.params.id;
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
+   // const page = parseInt(req.query.page) || 1;
+   // const limit = parseInt(req.query.limit) || 10;
     const total = await UserNotification.countDocuments().where({user_id: id});;
     const seenTotal = await UserNotification.countDocuments().where({user_id: id,status: true});
     const unseenTotal = await UserNotification.countDocuments().where({user_id: id,status: false});
     const data = await UserNotification.find()
     .where({user_id: id})
-    .skip((page -1)* limit)
-    .limit(limit);
+   // .skip((page -1)* limit)
+   //.limit(limit);
 
   res.send({
     message: "successfully fetched User notifications",
     data: data,
-    page: page,
-    limit: limit,
+   // page: page,
+   // limit: limit,
     total: total,
     unseenTotal: unseenTotal,
     seenTotal: seenTotal
