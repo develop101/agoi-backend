@@ -146,6 +146,9 @@ Content-Type: application/json
 
 ######################### END #####################################
 
+### investment
+GET  http://localhost:3002/api/v1/user/investment/62f73d210e5bcfea8f6afc28
+Content-Type: application/json
 
 
 

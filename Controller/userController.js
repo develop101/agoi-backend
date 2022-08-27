@@ -7,6 +7,7 @@ const UserNotification = require("../Model/userNotificationModel");
 const AdminNotification = require("../Model/adminNotificationModel");
 const SellStock = require("../Model/sellStocksModel");
 const Cashout = require("../Model/cashoutModel");
+const Payment = require("../Model/paymentModel");
 
 
 // USER START
@@ -102,6 +103,33 @@ exports.findById = async (req, res, next) => {
       message: "User succefully fetched",
       data: result,
     });
+  } catch (err) {
+    console.log(err);
+    res.send({
+      message: err.message,
+    });
+  }
+};
+
+//GET users byId
+exports.investmentByUserId = async (req, res, next) => {
+  try {
+    const totalTransection = await Payment.countDocuments({ user_id: req.params.id });
+    let result = await Payment.find({ user_id: req.params.id }); 
+
+    //add all the payments
+    let investment = 0;
+    result.forEach((element =>{
+      console.log(element.payment_amount);
+      investment += element.payment_amount;
+    }))
+    res.send({
+      message: "payment history succefully fetched",
+      data: result,
+      totalTransection: totalTransection,
+      totalInsvestment: investment
+    });
+
   } catch (err) {
     console.log(err);
     res.send({

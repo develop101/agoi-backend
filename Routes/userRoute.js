@@ -1,6 +1,6 @@
 const express = require("express");
 const { generateOrder, returnOrderUrl, getOrderFromBackend: getOrder, getOrderFromCashFree, generatePayment, getUserOrders, availableOrder } = require("../Controller/OrdersController");
-const { createUserByContact, findUserByContact, addKYCDetails, completeProfileDetails, findall, findById, deleteUserById , EditWalletAmount, getKYCDetails, getallKYCDetails, editUserById, getAll, editAdminDetails, getAllOrder, getOrderById, kyc, kycStatus, orderStatus, storeNotification, getAllNotification, getAllSellOrder, getAllPurchaseOrder, getAllCashout, getCashoutById, cashoutStatus, updateUserwithCashout, getAllAdminNotification, getAllUserNotification, userNotificationStatus} = require("../Controller/userController");
+const { createUserByContact, findUserByContact, addKYCDetails, completeProfileDetails, findall, findById, deleteUserById , EditWalletAmount, getKYCDetails, getallKYCDetails, editUserById, getAll, editAdminDetails, getAllOrder, getOrderById, kyc, kycStatus, orderStatus, storeNotification, getAllNotification, getAllSellOrder, getAllPurchaseOrder, getAllCashout, getCashoutById, cashoutStatus, updateUserwithCashout, getAllAdminNotification, getAllUserNotification, userNotificationStatus, investmentByUserId} = require("../Controller/userController");
 const router = express.Router();
 
 
@@ -23,6 +23,7 @@ router.post("/generate-payment", generatePayment)
 router.get("/get-user-orders/:id", getUserOrders)
 router.delete("/:id", deleteUserById);
 router.get("/:id",findById);
+router.get("/investment/:id", investmentByUserId);
 router.route("/edit-wallet/:id").post(EditWalletAmount);
 router.get("/kyc/all", kyc);
 router.get("/kyc/:id", getKYCDetails);
