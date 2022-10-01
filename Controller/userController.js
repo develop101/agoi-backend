@@ -78,7 +78,8 @@ exports.getAll = async (req, res, next) => {
     let result = await User.find({name: {$regex: search, $options: "i"}})
       .populate('referred_userDetails cashout notification')
       .skip((page - 1) * limit)
-      .limit(limit);
+      .limit(limit)
+      .sort({updatedAt: -1});
 
     res.send({
       message: "List of All User",
@@ -596,7 +597,7 @@ exports.addKYCDetails = async (req, res, next) => {
 exports.kyc = async (req, res, next) => {
   try {
     let allkyc = [];
-    const kycData = await User.find();
+    const kycData = await User.find().sort({updatedAt: -1});
     kycData.forEach(async (kyc) => {
       kyc = {
         _id: kyc.id,
