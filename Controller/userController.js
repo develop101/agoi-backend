@@ -677,6 +677,7 @@ exports.kycStatus = async (req, res, next) => {
     }
 
     kycData.is_kyc_approved = data.is_kyc_approved ? data.is_kyc_approved : kycData.is_kyc_approved;
+    kycData.is_approved = data.is_approved  ? data.is_approved  : kycData.is_approved;
     kycData.kyc_feedback = data.kyc_feedback ? data.kyc_feedback : kycData.kyc_feedback;
 
     await kycData.save()
