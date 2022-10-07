@@ -597,7 +597,7 @@ exports.addKYCDetails = async (req, res, next) => {
 exports.kyc = async (req, res, next) => {
   try {
     let allkyc = [];
-    const kycData = await User.find().sort({updatedAt: -1});
+    const kycData = await User.find({name: {$regex: search, $options: "i"}}).sort({updatedAt: -1});
     kycData.forEach(async (kyc) => {
       kyc = {
         _id: kyc.id,
