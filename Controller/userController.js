@@ -237,7 +237,8 @@ exports.completeProfileDetails = async (req, res, next) => {
 //DELETE
 exports.deleteUserById = async (req, res, next) => {
   try {
-    await User.findByIdAndDelete(req.params.id);
+    await User.findByIdAndDelete(req.params.id); // TODO delete all the data related to the user 
+    
     res.status(200).json("User has been deleted...");
   } catch (err) {
     res.status(500).json(err);
@@ -596,6 +597,7 @@ exports.addKYCDetails = async (req, res, next) => {
 //GET ALL KYC DETAILS
 exports.kyc = async (req, res, next) => {
   try {
+    const search = req.query.term || "";
     let allkyc = [];
     const kycData = await User.find({name: {$regex: search, $options: "i"}}).sort({updatedAt: -1});
     kycData.forEach(async (kyc) => {
