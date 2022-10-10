@@ -237,7 +237,14 @@ exports.completeProfileDetails = async (req, res, next) => {
 //DELETE
 exports.deleteUserById = async (req, res, next) => {
   try {
-    await User.findByIdAndDelete(req.params.id); // TODO delete all the data related to the user 
+    const id = req.params.id;
+
+    await Cashout.deleteOne({user_id: id});
+    await Notification.deleteOne({user_id: id});
+    await Order.deleteOne({user_id: id});
+    await Payment.deleteOne({user_id: id});
+    await SellStock.deleteOne({user_id: id});
+    await User.findByIdAndDelete(id);        
     
     res.status(200).json("User has been deleted...");
   } catch (err) {
