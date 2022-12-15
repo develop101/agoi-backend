@@ -36,7 +36,7 @@ exports.generateOrder = async (req, res) => {
         },
         order_meta: {
           return_url:
-            "http://159.65.158.12/get-return-order?order_id={order_id}&order_token={order_token}",
+            "http://http://agoifinancialservices.com/get-return-order?order_id={order_id}&order_token={order_token}",
         },
       },
       {
