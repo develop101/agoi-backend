@@ -365,7 +365,7 @@ exports.getAllOrder = async (req, res, next) => {
     let limit = parseInt(req.query.limit) || 10;
     const search = req.query.term || "";
 
-    let result = await Order.find({order_note: {$regex: search, $options: "i"}}).populate('user_id');
+    let result = await Order.find({order_note: {$regex: search, $options: "i"}}).populate('user_id').sort({updatedAt: -1});
     let orderArry = []
 
     result.forEach(obj => {
