@@ -442,6 +442,7 @@ exports.getAllOrder = async (req, res, next) => {
 //get all Order
 exports.getAllPurchaseOrder = async (req, res, next) => {
   try {
+    console.log("inside");
     const page = parseInt(req.query.page);
     const limit = parseInt(req.query.limit) || 5;
     const search = req.query.term || "";
@@ -926,7 +927,8 @@ exports.getAllCashout = async (req, res, next) => {
     let result = await Cashout.find() //{cashout_amount: {$regex: search, $options: "i"}}
     .populate('user_id')
     .skip((page - 1) * limit)
-    .limit(limit);
+    .limit(limit)
+    .sort({updatedAt: -1});
     
     let data = [];
 
